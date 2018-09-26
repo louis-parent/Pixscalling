@@ -1,12 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <string.h>
 #include "headers/bitmap.h"
+#include "headers/timer.h"
 
 #define INPUT_FILE "in.bmp"
+#define OUTPUT_FILE "out.bmp"
 
-void convert1(){
+// FIRST VERSION FOR NEGATIVE
+/*void convert1()
+{
     FILE *in;
     FILE *out;
 
@@ -28,9 +31,10 @@ void convert1(){
 
     fclose(in);
     fclose(out);
-}
+}*/
 
-void bmpToInt(){
+// OLD VERSION FOR CONVERTING FROM BMP TO INT ARRAY
+/*void bmpToInt(){
     FILE *in;
     FILE *out;
 
@@ -48,14 +52,16 @@ void bmpToInt(){
 
     fclose(in);
     fclose(out);
-}
+}*/
 
-void intToBmp(){
+
+// OLD VERSION FOR CONVERTING FROM INT ARRAY TO BMP
+/*void intToBmp(){
     FILE *in;
     FILE *out;
 
     in = fopen("out1.bmp", "rb");
-    out = fopen("out2.bmp", "wb");
+    out = fopen(OUTPUT_FILE, "wb");
 
     fseek(in, 0L, SEEK_END);
     int size = ftell(in);
@@ -77,33 +83,18 @@ void intToBmp(){
 
     fclose(in);
     fclose(out);
+}*/
+
+void copyFile()
+{
+	Bitmap bitmap = readBitmap(INPUT_FILE);
+	writeBitmap(OUTPUT_FILE, &bitmap);
 }
 
-
-
-double timeCounter(void (*ptr)()){
-    clock_t start, end;
-
-    start = clock();
-
-    (*ptr)();
-
-    end = clock();
-    return ((double) (end - start)) / CLOCKS_PER_SEC;
-}
-
-double timeCounterAverage(void (*ptr)(), int n){
-    double sum = .0;
-    for(int i = 0; i < n; i++){
-        sum += timeCounter(ptr);
-    }
-    return sum/n;
-}
-
-int main() {
-    bmpToInt();
-    intToBmp();
-
+int main()
+{
+    printf("First Test : %f\n", timeCounterAverage(copyFile, 100));
+    
     return EXIT_SUCCESS;
 }
 
