@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include "headers/bitmap.h"
 
 #define INPUT_FILE "in.bmp"
 
@@ -97,12 +98,13 @@ double timeCounterAverage(void (*ptr)(), int n){
         sum += timeCounter(ptr);
     }
     return sum/n;
-    
 }
 
 int main() {
     bmpToInt();
     intToBmp();
+
+    return EXIT_SUCCESS;
 }
 
 
