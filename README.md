@@ -1,3 +1,3 @@
 # Pixscalling
 
-Projet de 3e Semestre ayant pour but d'appliquer des filtres de Pixel Scalling sur des images ou toute autre sources ! 
+3rd Semester project aiming to apply Pixel Scalling filters on images or any other sources!
