@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "headers/bitmap.h"
 
 #define INPUT_FILE "in.bmp"
 
-int convert1(){
+void convert1(){
     FILE *in;
     FILE *out;
 
@@ -27,9 +28,9 @@ int convert1(){
     fclose(out);
 }
 
-int convert2(){
+/*int convert2(){
 
-}
+}*/
 
 int main() {
 
@@ -44,5 +45,7 @@ int main() {
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
 
     printf("%f\n", cpu_time_used);
+    
+    return EXIT_SUCCESS;
 }
 
