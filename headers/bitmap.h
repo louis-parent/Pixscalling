@@ -17,6 +17,9 @@ struct Bitmap
 
 void initBitmap(Bitmap* bitmap);
 
+int* extractHeader(int fullBmp[]);
+int* extractPixels(int fullBmp[], int bmpSize);
+
 Bitmap readBitmap(char *input);
 int writeBitmap(char *output, Bitmap* bitmap);
 

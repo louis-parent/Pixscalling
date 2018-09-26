@@ -94,7 +94,7 @@ void copyFile()
 int main()
 {
     printf("First Test : %f\n", timeCounterAverage(copyFile, 100));
-    
+
     return EXIT_SUCCESS;
 }
 
