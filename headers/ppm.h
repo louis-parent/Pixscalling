@@ -2,6 +2,7 @@
 #define H_PPM
 
 #include "../headers/pixel.h"
+#include "../headers/matrix.h"
 
 #define PPM_MAGIC_NUMBER "P6"
 #define PPM_MAGIC_NUMBER_LETTER "P"
@@ -14,7 +15,7 @@ struct PPMHeader
 
 	int width;
 	int height;
-	
+
 	int colorLevel;
 };
 
@@ -23,9 +24,9 @@ struct PPM
 {
 	char* filename;
 	int size;
-	
+
 	PPMHeader header;
-	Pixel** content;
+	Matrix* content;
 };
 
 void initHeader(PPMHeader* header);
@@ -39,11 +40,15 @@ Pixel* getPixel(PPM* ppm, int x, int y);
 int getWidth(PPM* ppm);
 int getHeight(PPM* ppm);
 
+Matrix* getContent(PPM* ppm);
+
 int getPixelQuantity(PPM* ppm);
 
 void setWidth(PPM* ppm, int width);
 void setHeight(PPM* ppm, int height);
 
-void setContent(PPM* ppm, Pixel** content);
+void setContent(PPM* ppm, Matrix* content);
+
+void setPixel(PPM* ppm, Pixel* pixel, int x, int y);
 
 #endif

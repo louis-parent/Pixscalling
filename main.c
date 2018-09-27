@@ -30,19 +30,20 @@ void obscurate()
 		{
 			dividePixel(getPixel(ppm, x, y), 2, 2, 2);
 		}
-	}	
+	}
 	writePPM(OUTPUT_FILE, ppm);
 }
 
-int main1()
+int main()
 {
-    printf("First Test : %f\n", timeCounterAverage(copyFile, 100));
-    printf("Second Test : %f\n", timeCounterAverage(obscurate, 100));
+	printf("Begining Test :\n");
+    printf("\tFirst Test : %f\n", timeCounterAverage(copyFile, 100));
+    printf("\tSecond Test : %f\n", timeCounterAverage(obscurate, 100));
 
     return EXIT_SUCCESS;
 }
 
-void growup(int mult){
+/*void growup(int mult){
 	PPM* inPPM = readPPM(INPUT_FILE);
 	Pixel** in = inPPM->content;
 
@@ -61,7 +62,7 @@ void growup(int mult){
 					out[0][0] = *getRGB(getRed(getPixel(inPPM, x, y)), getGreen(getPixel(inPPM, x, y)), getBlue(getPixel(inPPM, x, y)));
 					//out[mult*y+i][mult*x+j] = *getRGB(getRed(getPixel(inPPM, x, y)), getGreen(getPixel(inPPM, x, y)), getBlue(getPixel(inPPM, x, y)));
 				}
-			}	
+			}
 		}
 
 	}
@@ -73,12 +74,9 @@ void growup(int mult){
 	setHeight(&outPPM, 1);
 	//setHeight(&outPPM, inHeight*mult);
 	setContent(&outPPM, out);
-	writePPM(OUTPUT_FILE, &outPPM);	
+	writePPM(OUTPUT_FILE, &outPPM);
 }
 
 int main(){
 	growup(5);
-}
-
-
-
+}*/

@@ -14,7 +14,7 @@ Pixel* getRGB(unsigned char r, unsigned char g, unsigned char b)
 	pixel->r = r;
 	pixel->g = g;
 	pixel->b = b;
-	
+
 	return pixel;
 }
 
@@ -66,4 +66,9 @@ void dividePixel(Pixel* pixel, unsigned char r, unsigned char g, unsigned char b
 	pixel->r /= r;
 	pixel->g /= g;
 	pixel->b /= b;
+}
+
+Pixel* copyPixel(Pixel* pixel)
+{
+	return getRGB(getRed(pixel), getGreen(pixel), getBlue(pixel));
 }

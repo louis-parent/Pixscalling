@@ -23,4 +23,6 @@ void substractPixel(Pixel* pixel, unsigned char r, unsigned char g, unsigned cha
 void multiplyPixel(Pixel* pixel, unsigned char r, unsigned char g, unsigned char b);
 void dividePixel(Pixel* pixel, unsigned char r, unsigned char g, unsigned char b);
 
+Pixel* copyPixel(Pixel* pixel);
+
 #endif
