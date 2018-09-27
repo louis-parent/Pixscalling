@@ -34,12 +34,50 @@ void obscurate()
 	writePPM(OUTPUT_FILE, ppm);
 }
 
-int main()
+int main1()
 {
     printf("First Test : %f\n", timeCounterAverage(copyFile, 100));
     printf("Second Test : %f\n", timeCounterAverage(obscurate, 100));
 
     return EXIT_SUCCESS;
+}
+
+void growup(int mult){
+	PPM* inPPM = readPPM(INPUT_FILE);
+	Pixel** in = inPPM->content;
+
+	int inWidth = getWidth(inPPM);
+	int inHeight = getHeight(inPPM);
+
+	Pixel** out;
+	out = (Pixel**)malloc(sizeof(Pixel*));
+
+	for(int y = 0; y < inHeight; y++){
+		out[y] = (Pixel*)malloc(sizeof(Pixel));
+		for(int i = 0; i < mult; i++){
+			for(int x = 0; x < inWidth; x++){
+				for(int j = 0; j < mult; j++){
+					//printf("y = %i; i = %i; x = %i; j = %i\n", y, i, x, j);
+					out[0][0] = *getRGB(getRed(getPixel(inPPM, x, y)), getGreen(getPixel(inPPM, x, y)), getBlue(getPixel(inPPM, x, y)));
+					//out[mult*y+i][mult*x+j] = *getRGB(getRed(getPixel(inPPM, x, y)), getGreen(getPixel(inPPM, x, y)), getBlue(getPixel(inPPM, x, y)));
+				}
+			}	
+		}
+
+	}
+
+	PPM outPPM;
+	initPPM(&outPPM);
+	setWidth(&outPPM, 1);
+	//setWidth(&outPPM, inWidth*mult);
+	setHeight(&outPPM, 1);
+	//setHeight(&outPPM, inHeight*mult);
+	setContent(&outPPM, out);
+	writePPM(OUTPUT_FILE, &outPPM);	
+}
+
+int main(){
+	growup(5);
 }
 
 
