@@ -4,7 +4,13 @@
 
 ## Compilation
 
-use `make` in the project folder to compile all the necessary files in one pixscalling executable file.
+### Linux
+
+use `make` in the project folder to compile all the necessary files in one "pixscalling" executable file.
+
+### Window
+
+use `gcc -o pixscalling.exe main.c sources/bitmap.c sources/timer.c headers/bitmap.h headers/timer.h` in the project folder to compile all the necessary files in one "pixscalling.exe" executable file.
 
 ## Usage
 
