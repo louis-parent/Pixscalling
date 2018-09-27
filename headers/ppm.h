@@ -41,4 +41,9 @@ int getHeight(PPM* ppm);
 
 int getPixelQuantity(PPM* ppm);
 
+void setWidth(PPM* ppm, int width);
+void setHeight(PPM* ppm, int height);
+
+void setContent(PPM* ppm, Pixel** content);
+
 #endif

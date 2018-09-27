@@ -91,11 +91,11 @@ int writePPM(char *output, PPM* ppm)
 	int writed = 0;//The number of byte writed
 	FILE* out = fopen(output, "wb");//Open the output file
 	
-	fprintf(out, "%c%c\n", ppm->header.magicNumber[0], ppm->header.magicNumber[1]);//Write 
-	writed += sizeof(char) * sizeof(ppm->header.magicNumber) + sizeof(char);
+	fprintf(out, "%c%c\n", ppm->header.magicNumber[0], ppm->header.magicNumber[1]);//Write the magic number
+	writed += sizeof(char) * sizeof(ppm->header.magicNumber) + sizeof(char);//Add the magic number size to the writed file size
 	
-	fprintf(out, "%i %i\n", ppm->header.width, ppm->header.height);
-	writed += sizeof(int) * 2 + sizeof(char) * 2; 
+	fprintf(out, "%i %i\n", ppm->header.width, ppm->header.height);//Write the dimensions
+	writed += sizeof(int) * 2 + sizeof(char) * 2;//add the dimension
 	
 	fprintf(out, "%i\n", ppm->header.colorLevel);
 	writed += sizeof(int) + sizeof(char);
@@ -131,4 +131,19 @@ int getHeight(PPM* ppm)
 int getPixelQuantity(PPM* ppm)
 {
 	return getWidth(ppm) * getHeight(ppm);
+}
+
+void setWidth(PPM* ppm, int width)
+{
+	ppm->header.width = width;
+}
+
+void setHeight(PPM* ppm, int height)
+{
+	ppm->header.height = height;
+}
+
+void setContent(PPM* ppm, Pixel** content)
+{
+	ppm->content = content;
 }
