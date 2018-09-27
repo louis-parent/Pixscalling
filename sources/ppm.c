@@ -112,3 +112,23 @@ int writePPM(char *output, PPM* ppm)
 	fclose(out);	
     return writed;
 }
+
+Pixel* getPixel(PPM* ppm, int x, int y)
+{
+	return &ppm->content[y][x];
+}
+
+int getWidth(PPM* ppm)
+{
+	return ppm->header.width;
+}
+
+int getHeight(PPM* ppm)
+{
+	return ppm->header.height;
+}
+
+int getPixelQuantity(PPM* ppm)
+{
+	return getWidth(ppm) * getHeight(ppm);
+}

@@ -32,3 +32,38 @@ unsigned char getBlue(Pixel* pixel)
 {
 	return pixel->b;
 }
+
+void modifyPixel(Pixel* pixel, unsigned char r, unsigned char g, unsigned char b)
+{
+	pixel->r = r;
+	pixel->g = g;
+	pixel->b = b;
+}
+
+void increasePixel(Pixel* pixel, unsigned char r, unsigned char g, unsigned char b)
+{
+	pixel->r += r;
+	pixel->g += g;
+	pixel->b += b;
+}
+
+void substractPixel(Pixel* pixel, unsigned char r, unsigned char g, unsigned char b)
+{
+	pixel->r -= r;
+	pixel->g -= g;
+	pixel->b -= b;
+}
+
+void multiplyPixel(Pixel* pixel, unsigned char r, unsigned char g, unsigned char b)
+{
+	pixel->r *= r;
+	pixel->g *= g;
+	pixel->b *= b;
+}
+
+void dividePixel(Pixel* pixel, unsigned char r, unsigned char g, unsigned char b)
+{
+	pixel->r /= r;
+	pixel->g /= g;
+	pixel->b /= b;
+}

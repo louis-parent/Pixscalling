@@ -16,4 +16,11 @@ unsigned char getRed(Pixel* pixel);
 unsigned char getGreen(Pixel* pixel);
 unsigned char getBlue(Pixel* pixel);
 
+void modifyPixel(Pixel* pixel, unsigned char r, unsigned char g, unsigned char b);
+
+void increasePixel(Pixel* pixel, unsigned char r, unsigned char g, unsigned char b);
+void substractPixel(Pixel* pixel, unsigned char r, unsigned char g, unsigned char b);
+void multiplyPixel(Pixel* pixel, unsigned char r, unsigned char g, unsigned char b);
+void dividePixel(Pixel* pixel, unsigned char r, unsigned char g, unsigned char b);
+
 #endif

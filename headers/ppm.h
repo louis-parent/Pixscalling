@@ -34,4 +34,11 @@ void initPPM(PPM* ppm);
 PPM* readPPM(char* input);
 int writePPM(char* output, PPM* ppm);
 
+Pixel* getPixel(PPM* ppm, int x, int y);
+
+int getWidth(PPM* ppm);
+int getHeight(PPM* ppm);
+
+int getPixelQuantity(PPM* ppm);
+
 #endif
