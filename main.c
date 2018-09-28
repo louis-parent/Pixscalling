@@ -34,6 +34,33 @@ void obscurate()
 	writePPM(OUTPUT_FILE, ppm);
 }
 
+void toGrayMap()
+{
+	PPM* ppm = readPPM(INPUT_FILE);
+	for(int y = 0; y < ppm->header.height; y++)
+	{
+		for(int x = 0; x < ppm->header.width; x++)
+		{
+			char grayLevel = 0.299 * getRed(getPixel(ppm, x, y)) +  0.587 * getGreen(getPixel(ppm, x, y)) + 0.114 * getBlue(getPixel(ppm, x, y));
+			setPixel(ppm, x, y, getRGB(grayLevel, grayLevel, grayLevel));
+		}
+	}
+	writePPM(OUTPUT_FILE, ppm);
+}
+
+void negative()
+{
+	PPM* ppm = readPPM(INPUT_FILE);
+	for(int y = 0; y < ppm->header.height; y++)
+	{
+		for(int x = 0; x < ppm->header.width; x++)
+		{
+			setPixel(ppm, x, y, getRGB(255 - getRed(getPixel(ppm, x, y)), 255 - getGreen(getPixel(ppm, x, y)), 255 - getBlue(getPixel(ppm, x, y))));
+		}
+	}
+	writePPM(OUTPUT_FILE, ppm);
+}
+
 void growup(int mult){
 	PPM* inPPM = readPPM(INPUT_FILE);
 	Matrix* in = getContent(inPPM);
@@ -69,11 +96,13 @@ void growup(int mult){
 
 int main()
 {
-	/*printf("Begining Test :\n");
-    printf("\tFirst Test : %f\n", timeCounterAverage(copyFile, 100));
-    printf("\tSecond Test : %f\n", timeCounterAverage(obscurate, 100));*/
+	printf("Begining Test :\n");
+    printf("\t- Simple Copy Test : %f\n", timeCounterAverage(copyFile, 100));
+    printf("\t- Obscurate Test : %f\n", timeCounterAverage(obscurate, 100));
+    printf("\t- Shade of Grey Test : %f\n", timeCounterAverage(toGrayMap, 100));
+    printf("\t- Negative Test : %f\n", timeCounterAverage(negative, 100));
     
-	growup(5);
+	//growup(5);
 	
     return EXIT_SUCCESS;
 }
