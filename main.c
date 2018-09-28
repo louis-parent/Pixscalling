@@ -80,7 +80,7 @@ void growup(int mult){
 				for(int j = 0; j < mult; j++){
 				
 					//printf("y = %i; i = %i; x = %i; j = %i\n", y, i, x, j);
-					set(out, 0, 0, copyPixel(getPixel(inPPM, x, y)));
+					set(out, mult*x+j, mult*y+i, copyPixel(getPixel(inPPM, x, y)));
 					//out[mult*y+i][mult*x+j] = *getRGB(getRed(getPixel(inPPM, x, y)), getGreen(getPixel(inPPM, x, y)), getBlue(getPixel(inPPM, x, y)));
 				}
 			}
@@ -90,9 +90,9 @@ void growup(int mult){
 
 	PPM outPPM;
 	initPPM(&outPPM);
-	setWidth(&outPPM, 1);
+	setWidth(&outPPM, inWidth*mult);
 	//setWidth(&outPPM, inWidth*mult);
-	setHeight(&outPPM, 1);
+	setHeight(&outPPM, inHeight*mult);
 	//setHeight(&outPPM, inHeight*mult);
 	setContent(&outPPM, out);
 	writePPM(OUTPUT_FILE, &outPPM);
@@ -102,15 +102,23 @@ void growup(int mult){
 	removeMatrix(out);
 }
 
-int main()
+void upscale(){
+	growup(5);
+}
+
+void test()
 {
 	printf("Begining Test :\n");
-    printf("\t- Simple Copy Test : %f\n", timeCounterAverage(copyFile, 100));
-    printf("\t- Obscurate Test : %f\n", timeCounterAverage(obscurate, 100));
-    printf("\t- Shade of Grey Test : %f\n", timeCounterAverage(toGrayMap, 100));
-    printf("\t- Negative Test : %f\n", timeCounterAverage(negative, 100));
-    
-	//growup(5);
+	printf("\t- Simple Upscale Test : %f\n", timeCounterAverage(upscale, 10));
+    //printf("\t- Simple Copy Test : %f\n", timeCounterAverage(copyFile, 100));
+    //printf("\t- Obscurate Test : %f\n", timeCounterAverage(obscurate, 100));
+    //printf("\t- Shade of Grey Test : %f\n", timeCounterAverage(toGrayMap, 100));
+    //printf("\t- Negative Test : %f\n", timeCounterAverage(negative, 100));
+}
+
+int main()
+{
+	test();
 	
     return EXIT_SUCCESS;
 }
