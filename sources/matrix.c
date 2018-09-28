@@ -57,3 +57,8 @@ void set(Matrix* matrix, int x, int y, Pixel* pixel)
 {
     matrix->matrix[y][x] = *pixel;
 }
+
+void removeMatrix(Matrix* matrix)
+{
+	free(matrix);
+}

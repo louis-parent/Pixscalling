@@ -49,6 +49,7 @@ PPM* readPPM(char *input)
 	ppm->header.magicNumber[0] = tmp[0];//Set the magic number
 	ppm->header.magicNumber[1] = tmp[1];
 	fseek(in, 1, SEEK_CUR);//Pass the end of line
+	free(tmp);//Deleting temporary buffer
 
 	char c;
 	int length = 0;
@@ -158,4 +159,9 @@ void setContent(PPM* ppm, Matrix* content)
 void setPixel(PPM* ppm, int x, int y, Pixel* pixel)
 {
 	set(getContent(ppm), x, y, pixel);
+}
+
+void removePPM(PPM* ppm)
+{
+	free(ppm);
 }

@@ -25,4 +25,6 @@ void dividePixel(Pixel* pixel, unsigned char r, unsigned char g, unsigned char b
 
 Pixel* copyPixel(Pixel* pixel);
 
+void removePixel(Pixel* pixel);
+
 #endif

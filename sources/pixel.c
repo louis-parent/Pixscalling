@@ -72,3 +72,8 @@ Pixel* copyPixel(Pixel* pixel)
 {
 	return getRGB(getRed(pixel), getGreen(pixel), getBlue(pixel));
 }
+
+void removePixel(Pixel* pixel)
+{
+	free(pixel);
+}

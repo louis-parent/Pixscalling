@@ -24,4 +24,6 @@ int matrixSize(Matrix* matrix);
 Pixel* select(Matrix* matrix, int x, int y);
 void set(Matrix* matrix, int x, int y, Pixel* pixel);
 
+void removeMatrix(Matrix* matrix);
+
 #endif

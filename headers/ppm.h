@@ -51,4 +51,6 @@ void setContent(PPM* ppm, Matrix* content);
 
 void setPixel(PPM* ppm, int x, int y, Pixel* pixel);
 
+void removePPM(PPM* ppm);
+
 #endif

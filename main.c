@@ -19,6 +19,7 @@ void copyFile()
 {
 	PPM* ppm = readPPM(INPUT_FILE);
 	writePPM(OUTPUT_FILE, ppm);
+	removePPM(ppm);
 }
 
 void obscurate()
@@ -32,6 +33,7 @@ void obscurate()
 		}
 	}
 	writePPM(OUTPUT_FILE, ppm);
+	remove(ppm);
 }
 
 void toGrayMap()
@@ -46,6 +48,7 @@ void toGrayMap()
 		}
 	}
 	writePPM(OUTPUT_FILE, ppm);
+	removePPM(ppm);
 }
 
 void negative()
@@ -59,6 +62,7 @@ void negative()
 		}
 	}
 	writePPM(OUTPUT_FILE, ppm);
+	remove(ppm);
 }
 
 void growup(int mult){
@@ -92,6 +96,10 @@ void growup(int mult){
 	//setHeight(&outPPM, inHeight*mult);
 	setContent(&outPPM, out);
 	writePPM(OUTPUT_FILE, &outPPM);
+	
+	removePPM(inPPM);
+	removeMatrix(in);
+	removeMatrix(out);
 }
 
 int main()
