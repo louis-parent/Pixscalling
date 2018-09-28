@@ -79,7 +79,7 @@ PPM* readPPM(char *input)
        		fread(&bgrpix,sizeof(unsigned char),3,in);//Read the RGB values
 
        		Pixel* pixel = getRGB(bgrpix[0], bgrpix[1], bgrpix[2]);//Create the pixel from RGB
-			setPixel(ppm, pixel,x, y);//Set the pixel
+			setPixel(ppm,x, y, pixel);//Set the pixel
 
 		}
 	}
@@ -155,7 +155,7 @@ void setContent(PPM* ppm, Matrix* content)
 	ppm->content = content;
 }
 
-void setPixel(PPM* ppm, Pixel* pixel, int x, int y)
+void setPixel(PPM* ppm, int x, int y, Pixel* pixel)
 {
 	set(getContent(ppm), x, y, pixel);
 }

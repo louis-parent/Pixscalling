@@ -11,7 +11,7 @@ void initMatrix(Matrix* matrix)
 
 Matrix* createMatrix(int lines, int columns)
 {
-    Matrix* matrix;
+    Matrix* matrix = malloc(sizeof(Matrix));
     initMatrix(matrix);
 
     matrix->matrix = (Pixel**) malloc(columns * sizeof(Pixel*));
@@ -24,6 +24,8 @@ Matrix* createMatrix(int lines, int columns)
             matrix->matrix[y][x] = *getRGB(255, 255, 255);
         }
     }
+    
+    return matrix;
 }
 
 void changeMatrix(Matrix* matrix, int lines, int columns)

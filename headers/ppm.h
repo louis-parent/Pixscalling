@@ -49,6 +49,6 @@ void setHeight(PPM* ppm, int height);
 
 void setContent(PPM* ppm, Matrix* content);
 
-void setPixel(PPM* ppm, Pixel* pixel, int x, int y);
+void setPixel(PPM* ppm, int x, int y, Pixel* pixel);
 
 #endif
