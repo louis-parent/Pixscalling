@@ -11,7 +11,7 @@ struct Matrix
     int lines;// The amount of line in the Matrix
     int columns;// The amount of columns in the Matrix
 
-    Pixel** matrix;
+    Pixel*** matrix;
 };
 
 /**

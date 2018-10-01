@@ -14,14 +14,15 @@ Matrix* createMatrix(int lines, int columns)
     Matrix* matrix = malloc(sizeof(Matrix));// Allocate memory for Matrix
     initMatrix(matrix);// Init an empty Matrix
 
-    matrix->matrix = (Pixel**) malloc(columns * sizeof(Pixel*)); // Allocate the array of columns
+    matrix->matrix = (Pixel***) malloc(columns * sizeof(Pixel**)); // Allocate the array of columns
 
     for(int y = 0; y < columns; y++)
     {
-        matrix->matrix[y] = (Pixel*) malloc(lines * sizeof(Pixel));// Allocate the lines for the column y
+        matrix->matrix[y] = (Pixel**) malloc(lines * sizeof(Pixel*));// Allocate the lines for the column y
         for(int x = 0; x < lines; x++)
         {
-            matrix->matrix[y][x] = *getRGB(255, 255, 255);// Set a default white pixel at each position
+        	matrix->matrix[y][x] = malloc(sizeof(Pixel*));
+            matrix->matrix[y][x] = getRGB(255, 255, 255);// Set a default white pixel at each position
         }
     }
     
@@ -51,12 +52,13 @@ int matrixSize(Matrix* matrix)
 
 Pixel* select(Matrix* matrix, int x, int y)
 {
-    return &matrix->matrix[y][x];// Select the Pixel at the given coordinates
+    return matrix->matrix[y][x];// Select the Pixel at the given coordinates
 }
 
 void set(Matrix* matrix, int x, int y, Pixel* pixel)
 {
-    matrix->matrix[y][x] = *pixel;// Modify the Pixel at the given coordinates
+	removePixel(matrix->matrix[y][x]);
+    matrix->matrix[y][x] = pixel;// Modify the Pixel at the given coordinates
 }
 
 void removeMatrix(Matrix* matrix)
@@ -67,6 +69,10 @@ void removeMatrix(Matrix* matrix)
 		{
 			for(int y = 0; y < matrix->columns; y++)//Delete each columns
 			{
+				for(int x = 0; x < matrix->lines; x++)
+				{
+					removePixel(matrix->matrix[y][x]);
+				}
 				free(matrix->matrix[y]);
 				
 			}

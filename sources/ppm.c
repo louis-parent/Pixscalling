@@ -179,15 +179,8 @@ void removePPM(PPM* ppm)
 {
 	if(ppm != NULL)
 	{
-		if(ppm->header != NULL)
-		{
-			removePPMHeader(ppm->header);// Remove the header
-		}
-		
-		if(ppm->content != NULL)
-		{
-			removeMatrix(ppm->content);// Remove the content Matrix
-		}
+		removePPMHeader(ppm->header);// Remove the header
+		removeMatrix(ppm->content);// Remove the content Matrix
 		
 		if(ppm->filename != NULL)
 		{

@@ -104,16 +104,16 @@ void upscale(){
 void test()
 {
 	printf("Begining Test :\n");
-    printf("\t- Simple Copy Test : %f\n", timeCounterAverage(copyFile, 1));
-   	printf("\t- Obscurate Test : %f\n", timeCounterAverage(obscurate, 1));
-   	printf("\t- Shade of Grey Test : %f\n", timeCounterAverage(toGrayMap, 1));
-    printf("\t- Negative Test : %f\n", timeCounterAverage(negative, 1));
-    printf("\t- Simple Upscale Test : %f\n", timeCounterAverage(upscale, 1));
+    printf("\t- Simple Copy Test : %f\n", timeCounterAverage(copyFile, 100));
+   	printf("\t- Obscurate Test : %f\n", timeCounterAverage(obscurate, 100));
+   	printf("\t- Shade of Grey Test : %f\n", timeCounterAverage(toGrayMap, 100));
+    printf("\t- Negative Test : %f\n", timeCounterAverage(negative, 100));
+    //printf("\t- Simple Upscale Test : %f\n", timeCounterAverage(upscale, 1));
 }
 
 int main()
 {
-	//test();
-	upscale();
+	test();
+	//upscale();
     return EXIT_SUCCESS;
 }
