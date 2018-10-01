@@ -46,6 +46,16 @@ void initHeader(PPMHeader* header);
 void initPPM(PPM* ppm);
 
 /**
+ * Create a PPM with the given width and heigth, and with the matrix as the content
+ * @param Matrix* matrix : the Matrix used for the content of the new PPM
+ * @param int width : the width value of the new PPM
+ * @param int height : the height value of the new PPM
+ *
+ * @return the newly created PPM Struct
+ */
+PPM* createPPM(Matrix* matrix, int width, int height);
+
+/**
  * Create a PPM from a PPM file
  * @param char* input : The PPM file name
  *

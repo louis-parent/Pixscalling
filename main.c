@@ -87,11 +87,7 @@ void growup(int mult){
 
 	}
 
-	PPM* outPPM = malloc(sizeof(PPM));
-	initPPM(outPPM);
-	setWidth(outPPM, inWidth*mult);
-	setHeight(outPPM, inHeight*mult);
-	setContent(outPPM, out);
+	PPM* outPPM = createPPM(out, inWidth*mult, inHeight*mult);
 	writePPM(OUTPUT_FILE, outPPM);
 	
 	removePPM(inPPM);
@@ -138,10 +134,10 @@ int comparePixel(Pixel* a, Pixel* b){
 	void test()
 {
 	printf("Begining Test :\n");
-    printf("\t- Simple Copy Test : %f\n", timeCounterAverage(copyFile, 1));
-   	printf("\t- Obscurate Test : %f\n", timeCounterAverage(obscurate, 1));
-   	printf("\t- Shade of Grey Test : %f\n", timeCounterAverage(toGrayMap, 1));
-    printf("\t- Negative Test : %f\n", timeCounterAverage(negative, 1));
+    printf("\t- Simple Copy Test : %f\n", timeCounterAverage(copyFile, 100));
+   	printf("\t- Obscurate Test : %f\n", timeCounterAverage(obscurate, 100));
+   	printf("\t- Shade of Grey Test : %f\n", timeCounterAverage(toGrayMap, 100));
+    printf("\t- Negative Test : %f\n", timeCounterAverage(negative, 100));
     printf("\t- Simple Upscale Test : %f\n", timeCounterAverage(upscale, 1));
 }
 

@@ -28,6 +28,18 @@ void initPPM(PPM* ppm)
 	ppm->content = NULL;
 }
 
+PPM* createPPM(Matrix* matrix, int width, int height)
+{
+	PPM* ppm = malloc(sizeof(PPM));// Allocate a PPM in the memory
+	initPPM(ppm);// Init the PPM to its default value
+	
+	setWidth(ppm, width);// Change the width with the given one
+	setHeight(ppm, height);// Change the height with the given one
+	setContent(ppm, matrix);// Set the Matrix as the content of the PPM
+	
+	return ppm;
+}
+
 PPM* readPPM(char *input)
 {
 	PPM* ppm = malloc(sizeof(PPM));//Create empty PPM
@@ -179,15 +191,8 @@ void removePPM(PPM* ppm)
 {
 	if(ppm != NULL)
 	{
-		if(ppm->header != NULL)
-		{
-			removePPMHeader(ppm->header);// Remove the header
-		}
-		
-		if(ppm->content != NULL)
-		{
-			removeMatrix(ppm->content);// Remove the content Matrix
-		}
+		removePPMHeader(ppm->header);// Remove the header
+		removeMatrix(ppm->content);// Remove the content Matrix
 		
 		if(ppm->filename != NULL)
 		{
