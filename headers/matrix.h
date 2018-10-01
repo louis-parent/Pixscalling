@@ -16,6 +16,7 @@ struct Matrix
 
 /**
  * Initialize a matrix to its default value
+ * @param Matrix* matrix : the matrix to be initialized
  */
 void initMatrix(Matrix* matrix);
 

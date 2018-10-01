@@ -164,14 +164,36 @@ void setPixel(PPM* ppm, int x, int y, Pixel* pixel)
 
 void removePPMHeader(PPMHeader* header)
 {
-	free(header->magicNumber); // Remove the magic number pointer
-	free(header); // Remove the entiere header
+	if(header != NULL)
+	{
+		if(header->magicNumber != NULL && header->magicNumber != PPM_MAGIC_NUMBER)
+		{
+			free(header->magicNumber); // Remove the magic number pointer
+		}
+		
+		free(header); // Remove the entiere header
+	}
 }
 
 void removePPM(PPM* ppm)
 {
-	removePPMHeader(ppm->header);// Remove the header
-	removeMatrix(ppm->content);// Remove the content Matrix
-	free(ppm->filename); // Remove the filename pointer
-	free(ppm);// Remove the PPM
+	if(ppm != NULL)
+	{
+		if(ppm->header != NULL)
+		{
+			removePPMHeader(ppm->header);// Remove the header
+		}
+		
+		if(ppm->content != NULL)
+		{
+			removeMatrix(ppm->content);// Remove the content Matrix
+		}
+		
+		if(ppm->filename != NULL)
+		{
+			free(ppm->filename); // Remove the filename pointer
+		}
+		
+		free(ppm);// Remove the PPM
+	}
 }

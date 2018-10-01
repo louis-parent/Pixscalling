@@ -61,11 +61,17 @@ void set(Matrix* matrix, int x, int y, Pixel* pixel)
 
 void removeMatrix(Matrix* matrix)
 {
-	for(int y = 0; y < matrix->columns; y++)
-    {
-        free(matrix->matrix[y]);
-        
-    }
-    free(matrix->matrix);
-	free(matrix);
+	if(matrix != NULL)
+	{
+		if(matrix->matrix != NULL)
+		{
+			for(int y = 0; y < matrix->columns; y++)
+			{
+				free(matrix->matrix[y]);
+				
+			}
+			free(matrix->matrix);
+		}
+		free(matrix);
+	}
 }

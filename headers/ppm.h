@@ -35,11 +35,13 @@ struct PPM
 
 /**
  * Create an empty PPMHeader
+ * @param PPMHeader* header : the PPMHeader to be initialized
  */
 void initHeader(PPMHeader* header);
 
 /**
  * Create an empty PPM
+ * @param PPM* ppm : the PPM to be initialized
  */
 void initPPM(PPM* ppm);
 
