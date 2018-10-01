@@ -25,23 +25,23 @@ void copyFile()
 void obscurate()
 {
 	PPM* ppm = readPPM(INPUT_FILE);
-	for(int y = 0; y < ppm->header.height; y++)
+	for(int y = 0; y < ppm->header->height; y++)
 	{
-		for(int x = 0; x < ppm->header.width; x++)
+		for(int x = 0; x < ppm->header->width; x++)
 		{
 			dividePixel(getPixel(ppm, x, y), 2, 2, 2);
 		}
 	}
 	writePPM(OUTPUT_FILE, ppm);
-	remove(ppm);
+	removePPM(ppm);
 }
 
 void toGrayMap()
 {
 	PPM* ppm = readPPM(INPUT_FILE);
-	for(int y = 0; y < ppm->header.height; y++)
+	for(int y = 0; y < ppm->header->height; y++)
 	{
-		for(int x = 0; x < ppm->header.width; x++)
+		for(int x = 0; x < ppm->header->width; x++)
 		{
 			char grayLevel = 0.299 * getRed(getPixel(ppm, x, y)) +  0.587 * getGreen(getPixel(ppm, x, y)) + 0.114 * getBlue(getPixel(ppm, x, y));
 			setPixel(ppm, x, y, getRGB(grayLevel, grayLevel, grayLevel));
@@ -54,15 +54,15 @@ void toGrayMap()
 void negative()
 {
 	PPM* ppm = readPPM(INPUT_FILE);
-	for(int y = 0; y < ppm->header.height; y++)
+	for(int y = 0; y < ppm->header->height; y++)
 	{
-		for(int x = 0; x < ppm->header.width; x++)
+		for(int x = 0; x < ppm->header->width; x++)
 		{
 			setPixel(ppm, x, y, getRGB(255 - getRed(getPixel(ppm, x, y)), 255 - getGreen(getPixel(ppm, x, y)), 255 - getBlue(getPixel(ppm, x, y))));
 		}
 	}
 	writePPM(OUTPUT_FILE, ppm);
-	remove(ppm);
+	removePPM(ppm);
 }
 
 void growup(int mult){
@@ -79,27 +79,22 @@ void growup(int mult){
 			for(int x = 0; x < inWidth; x++){
 				for(int j = 0; j < mult; j++){
 				
-					//printf("y = %i; i = %i; x = %i; j = %i\n", y, i, x, j);
 					set(out, mult*x+j, mult*y+i, copyPixel(getPixel(inPPM, x, y)));
-					//out[mult*y+i][mult*x+j] = *getRGB(getRed(getPixel(inPPM, x, y)), getGreen(getPixel(inPPM, x, y)), getBlue(getPixel(inPPM, x, y)));
 				}
 			}
 		}
 
 	}
 
-	PPM outPPM;
-	initPPM(&outPPM);
-	setWidth(&outPPM, inWidth*mult);
-	//setWidth(&outPPM, inWidth*mult);
-	setHeight(&outPPM, inHeight*mult);
-	//setHeight(&outPPM, inHeight*mult);
-	setContent(&outPPM, out);
-	writePPM(OUTPUT_FILE, &outPPM);
+	PPM* outPPM = malloc(sizeof(PPM));
+	initPPM(outPPM);
+	setWidth(outPPM, inWidth*mult);
+	setHeight(outPPM, inHeight*mult);
+	setContent(outPPM, out);
+	writePPM(OUTPUT_FILE, outPPM);
 	
 	removePPM(inPPM);
-	removeMatrix(in);
-	removeMatrix(out);
+	removePPM(outPPM);
 }
 
 void upscale(){
@@ -109,16 +104,16 @@ void upscale(){
 void test()
 {
 	printf("Begining Test :\n");
-	printf("\t- Simple Upscale Test : %f\n", timeCounterAverage(upscale, 10));
-    //printf("\t- Simple Copy Test : %f\n", timeCounterAverage(copyFile, 100));
-    //printf("\t- Obscurate Test : %f\n", timeCounterAverage(obscurate, 100));
-    //printf("\t- Shade of Grey Test : %f\n", timeCounterAverage(toGrayMap, 100));
-    //printf("\t- Negative Test : %f\n", timeCounterAverage(negative, 100));
+    printf("\t- Simple Copy Test : %f\n", timeCounterAverage(copyFile, 100));
+   	printf("\t- Obscurate Test : %f\n", timeCounterAverage(obscurate, 100));
+   	printf("\t- Shade of Grey Test : %f\n", timeCounterAverage(toGrayMap, 100));
+    printf("\t- Negative Test : %f\n", timeCounterAverage(negative, 100));
+    printf("\t- Simple Upscale Test : %f\n", timeCounterAverage(upscale, 10));
 }
 
 int main()
 {
-	test();
-	
+	//test();
+	toGrayMap();
     return EXIT_SUCCESS;
 }

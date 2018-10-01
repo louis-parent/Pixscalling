@@ -11,6 +11,7 @@ void initPixel(Pixel* pixel)
 Pixel* getRGB(unsigned char r, unsigned char g, unsigned char b)
 {
 	Pixel* pixel = malloc(3 * sizeof(unsigned char));
+	initPixel(pixel);
 	pixel->r = r;
 	pixel->g = g;
 	pixel->b = b;

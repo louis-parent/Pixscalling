@@ -30,6 +30,7 @@ Matrix* createMatrix(int lines, int columns)
 
 void changeMatrix(Matrix* matrix, int lines, int columns)
 {
+	removeMatrix(matrix);
     matrix = createMatrix(lines, columns);
 }
 
@@ -60,5 +61,11 @@ void set(Matrix* matrix, int x, int y, Pixel* pixel)
 
 void removeMatrix(Matrix* matrix)
 {
+	for(int y = 0; y < matrix->columns; y++)
+    {
+        free(matrix->matrix[y]);
+        
+    }
+    free(matrix->matrix);
 	free(matrix);
 }

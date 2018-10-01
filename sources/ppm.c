@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../headers/ppm.h"
-#include "../headers/pixel.h"
 
 void initHeader(PPMHeader* header)
 {
@@ -25,7 +24,7 @@ void initPPM(PPM* ppm)
 
 	ppm->filename = NULL;
 	ppm->size = 0;
-	ppm->header = *header;
+	ppm->header = header;
 	ppm->content = NULL;
 }
 
@@ -33,7 +32,8 @@ PPM* readPPM(char *input)
 {
 	PPM* ppm = malloc(sizeof(PPM));//Create empty PPM
 	initPPM(ppm);//Init PPM
-	ppm->filename = input;//Set the origin file name of the PPM
+	ppm->filename = malloc(sizeof(input));
+	strcpy(ppm->filename, input);//Set the origin file name of the PPM
 
 	FILE* in = fopen(input, "rb");//Open the orignal file
 
@@ -45,9 +45,9 @@ PPM* readPPM(char *input)
 
 	char* tmp = malloc(sizeof(char) * 2);//Save the Magic number in a temp Buffer
 	fread(tmp, 2*sizeof(char), 1, in);//read the Magic Number
-	ppm->header.magicNumber = malloc(sizeof(char) *2);//Init the magic number
-	ppm->header.magicNumber[0] = tmp[0];//Set the magic number
-	ppm->header.magicNumber[1] = tmp[1];
+	ppm->header->magicNumber = malloc(sizeof(char) *2);//Init the magic number
+	ppm->header->magicNumber[0] = tmp[0];//Set the magic number
+	ppm->header->magicNumber[1] = tmp[1];
 	fseek(in, 1, SEEK_CUR);//Pass the end of line
 	free(tmp);//Deleting temporary buffer
 
@@ -63,18 +63,18 @@ PPM* readPPM(char *input)
 	}while(c != '\n');//Read the dimension line
 
 	buffer[length - 1] = ' ';//Replace the end of line for no interpreting by atoi
-	ppm->header.width = atoi(strtok(buffer, " "));//Set the width Width
-	ppm->header.height = atoi(strtok(NULL, " "));//Set the Height
+	ppm->header->width = atoi(strtok(buffer, " "));//Set the width Width
+	ppm->header->height = atoi(strtok(NULL, " "));//Set the Height
 
 	char color[3];//The color buffer
 	fread(color, sizeof(char), 3, in);//Read the Color Level
-	ppm->header.colorLevel = atoi(color);//Set the color level with cast to int
+	ppm->header->colorLevel = atoi(color);//Set the color level with cast to int
 	fseek(in, 1, SEEK_CUR);//Pass the end of line
 
-	ppm->content = createMatrix(ppm->header.width, ppm->header.height);//Init the first dimension of the matrix
-	for(int y = 0; y < ppm->header.height; y++)
+	ppm->content = createMatrix(ppm->header->width, ppm->header->height);//Init the first dimension of the matrix
+	for(int y = 0; y < ppm->header->height; y++)
 	{
-		for(int x = 0; x < ppm->header.width; x++)
+		for(int x = 0; x < ppm->header->width; x++)
 		{
 			unsigned char bgrpix[3];//The RGB Buffer
        		fread(&bgrpix,sizeof(unsigned char),3,in);//Read the RGB values
@@ -94,18 +94,18 @@ int writePPM(char *output, PPM* ppm)
 	int writed = 0;//The number of byte writed
 	FILE* out = fopen(output, "wb");//Open the output file
 
-	fprintf(out, "%c%c\n", ppm->header.magicNumber[0], ppm->header.magicNumber[1]);//Write the magic number
-	writed += sizeof(char) * sizeof(ppm->header.magicNumber) + sizeof(char);//Add the magic number size to the writed file size
+	fprintf(out, "%c%c\n", ppm->header->magicNumber[0], ppm->header->magicNumber[1]);//Write the magic number
+	writed += sizeof(char) * sizeof(ppm->header->magicNumber) + sizeof(char);//Add the magic number size to the writed file size
 
-	fprintf(out, "%i %i\n", ppm->header.width, ppm->header.height);//Write the dimensions
+	fprintf(out, "%i %i\n", ppm->header->width, ppm->header->height);//Write the dimensions
 	writed += sizeof(int) * 2 + sizeof(char) * 2;//add the dimension
 
-	fprintf(out, "%i\n", ppm->header.colorLevel);
+	fprintf(out, "%i\n", ppm->header->colorLevel);
 	writed += sizeof(int) + sizeof(char);
 
-	for(int y = 0; y < ppm->header.height; y++)
+	for(int y = 0; y < ppm->header->height; y++)
 	{
-		for(int x = 0; x < ppm->header.width; x++)
+		for(int x = 0; x < ppm->header->width; x++)
 		{
 			fprintf(out, "%c%c%c", getRed(getPixel(ppm, x, y)), getGreen(getPixel(ppm, x, y)), getBlue(getPixel(ppm, x, y)));
 			writed += sizeof(Pixel);
@@ -118,50 +118,60 @@ int writePPM(char *output, PPM* ppm)
 
 Pixel* getPixel(PPM* ppm, int x, int y)
 {
-	return select(ppm->content, x, y);
+	return select(ppm->content, x, y); //Select the pixel from the content Matrix
 }
 
 int getWidth(PPM* ppm)
 {
-	return ppm->header.width;
+	return ppm->header->width; // Return the width in the PPM header
 }
 
 int getHeight(PPM* ppm)
 {
-	return ppm->header.height;
+	return ppm->header->height; //Return the height in the PPM header
 }
 
 int getPixelQuantity(PPM* ppm)
 {
-	return getWidth(ppm) * getHeight(ppm);
+	return matrixSize(ppm->content); // Return the amount of pixel in the matrix
 }
 
 void setWidth(PPM* ppm, int width)
 {
-	ppm->header.width = width;
+	ppm->header->width = width; // Change the width in the PPM header
 }
 
 void setHeight(PPM* ppm, int height)
 {
-	ppm->header.height = height;
+	ppm->header->height = height; // Change the height in the PPM header
 }
 
 Matrix* getContent(PPM* ppm)
 {
-	return ppm->content;
+	return ppm->content; // Return the content Matrix 
 }
 
 void setContent(PPM* ppm, Matrix* content)
 {
-	ppm->content = content;
+	removeMatrix(ppm->content); //Remove the old Matrix
+	ppm->content = content;// Change the pointer to the new matrix
 }
 
 void setPixel(PPM* ppm, int x, int y, Pixel* pixel)
 {
-	set(getContent(ppm), x, y, pixel);
+	set(getContent(ppm), x, y, pixel);//Set pixel of the Matrix to a new pixel
+}
+
+void removePPMHeader(PPMHeader* header)
+{
+	free(header->magicNumber); // Remove the magic number pointer
+	free(header); // Remove the entiere header
 }
 
 void removePPM(PPM* ppm)
 {
-	free(ppm);
+	removePPMHeader(ppm->header);// Remove the header
+	removeMatrix(ppm->content);// Remove the content Matrix
+	free(ppm->filename); // Remove the filename pointer
+	free(ppm);// Remove the PPM
 }
