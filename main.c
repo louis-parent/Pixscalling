@@ -12,6 +12,7 @@
 #include "headers/pixel.h"
 #include "headers/matrix.h"
 #include "headers/timer.h"
+#include "headers/filter.h"
 
 #define INPUT_FILE "in.ppm"
 #define OUTPUT_FILE "out.ppm"
@@ -22,178 +23,42 @@ void copyFile()
 	writePPM(OUTPUT_FILE, ppm);
 	removePPM(ppm);
 }
-
-void obscurate()
-{
-	PPM* ppm = readPPM(INPUT_FILE);
-	for(int y = 0; y < ppm->header->height; y++)
-	{
-		for(int x = 0; x < ppm->header->width; x++)
-		{
-			dividePixel(getPixel(ppm, x, y), 2, 2, 2);
-		}
-	}
-	writePPM(OUTPUT_FILE, ppm);
-	removePPM(ppm);
-}
-
-void toGrayMap()
-{
-	PPM* ppm = readPPM(INPUT_FILE);
-	for(int y = 0; y < ppm->header->height; y++)
-	{
-		for(int x = 0; x < ppm->header->width; x++)
-		{
-			char grayLevel = 0.299 * getRed(getPixel(ppm, x, y)) +  0.587 * getGreen(getPixel(ppm, x, y)) + 0.114 * getBlue(getPixel(ppm, x, y));
-			setPixel(ppm, x, y, getRGB(grayLevel, grayLevel, grayLevel));
-		}
-	}
-	writePPM(OUTPUT_FILE, ppm);
-	removePPM(ppm);
-}
-
-void negative()
-{
-	PPM* ppm = readPPM(INPUT_FILE);
-	for(int y = 0; y < ppm->header->height; y++)
-	{
-		for(int x = 0; x < ppm->header->width; x++)
-		{
-			setPixel(ppm, x, y, getRGB(255 - getRed(getPixel(ppm, x, y)), 255 - getGreen(getPixel(ppm, x, y)), 255 - getBlue(getPixel(ppm, x, y))));
-		}
-	}
-	writePPM(OUTPUT_FILE, ppm);
-	removePPM(ppm);
-}
-
-void growup(int mult){
-	PPM* inPPM = readPPM(INPUT_FILE);
-	Matrix* in = getContent(inPPM);
-
-	int inWidth = getWidth(inPPM);
-	int inHeight = getHeight(inPPM);
-
-	Matrix* out = createMatrix(inWidth * mult, inHeight * mult);
-
-	for(int y = 0; y < inHeight; y++){
-		for(int i = 0; i < mult; i++){
-			for(int x = 0; x < inWidth; x++){
-				for(int j = 0; j < mult; j++){
-				
-					set(out, mult*x+j, mult*y+i, copyPixel(getPixel(inPPM, x, y)));
-				}
-			}
-		}
-
-	}
-
-	PPM* outPPM = createPPM(out, inWidth*mult, inHeight*mult);
-	writePPM(OUTPUT_FILE, outPPM);
-	
-	removePPM(inPPM);
-	removePPM(outPPM);
-}
-
-void upscale(){
-	growup(5);
-}
 	
 void test()
 {
-	printf("Begining Test :\n");
+	/*printf("Begining Test :\n");
     printf("\t- Simple Copy Test : %f\n", timeCounterAverage(copyFile, 100));
    	printf("\t- Obscurate Test : %f\n", timeCounterAverage(obscurate, 100));
    	printf("\t- Shade of Grey Test : %f\n", timeCounterAverage(toGrayMap, 100));
     printf("\t- Negative Test : %f\n", timeCounterAverage(negative, 100));
-    printf("\t- Simple Upscale Test : %f\n", timeCounterAverage(upscale, 1));
+    printf("\t- Simple Upscale Test : %f\n", timeCounterAverage(upscale, 1));*/
 }
 
-void scale2x()
+int main(int argc, char* argv[])
 {
-	int mult = 2;
-	PPM* inPPM = readPPM(INPUT_FILE);
-	Matrix* in = getContent(inPPM);
-
-	int inWidth = getWidth(inPPM);
-	int inHeight = getHeight(inPPM);
-
-	Matrix* out = createMatrix(inWidth * mult, inHeight * mult);
-
-	for(int y = 0; y < inHeight; y++){
-		for(int x = 0; x < inWidth; x++){
-			
-			set(out, 2*x, 2*y, copyPixel(getPixel(inPPM, x, y)));
-			set(out, 2*x+1, 2*y, copyPixel(getPixel(inPPM, x, y)));
-			set(out, 2*x, 2*y+1, copyPixel(getPixel(inPPM, x, y)));
-			set(out, 2*x+1, 2*y+1, copyPixel(getPixel(inPPM, x, y)));
-
-			// UP
-			Pixel* up = select(in, x, y);
-			if(y > 0){
-				up = select(in, x, y-1);
-			}
-
-			// Down
-			Pixel* down = select(in, x, y);
-			if(y < inHeight-1){
-				down = select(in, x, y+1);
-			}
-
-			// Left
-			Pixel* left = select(in, x, y);
-			if(x > 0){
-				left = select(in, x-1, y);
-			}
-			
-			// Right
-			Pixel* right = select(in, x, y);
-			if(x < inWidth-1){
-				right = select(in, x+1, y);
-			}
-
-			if(comparePixel(up, left)){
-				set(out, 2*x, 2*y, up);
-			}
-
-			if(comparePixel(up, right)){
-				set(out, 2*x+1, 2*y, up);
-			}
-
-			if(comparePixel(down, left) && y+1 < inHeight){
-				set(out, 2*x, 2*y+1, left);
-			}
-
-			if(comparePixel(down, right)){
-				set(out, 2*x+1, 2*y+1, down);
-			}
-			//set(out, mult*x+j, mult*y+i, copyPixel(getPixel(inPPM, x, y)));
-				
-			
-		}
-
+	if(argc != 2)
+	{
+		printf("Usage : ./pixscalling [Scale]\n");
+		return EXIT_FAILURE;
+	}
+	
+	int scale = atoi(argv[1]);
+	
+	if(scale < 1)
+	{
+		printf("Incorrect Scale\n");
+		return EXIT_FAILURE;
 	}
 
-	PPM* outPPM = malloc(sizeof(PPM));
-	initPPM(outPPM);
-	setWidth(outPPM, inWidth*mult);
-	setHeight(outPPM, inHeight*mult);
-	setContent(outPPM, out);
-	writePPM(OUTPUT_FILE, outPPM);
+	PPM* ppm = readPPM(INPUT_FILE);
 	
-	removePPM(inPPM);
-	removePPM(outPPM);
-}
-
-int main()
-{
-	scale2x();
+	for(int i = 0; i < scale/2 ; i++)
+	{
+		scale2x(ppm);
+	}
+	
+	writePPM(OUTPUT_FILE, ppm);
+	removePPM(ppm);
 	
     return EXIT_SUCCESS;
 }
-
-/*
-					Pixel* up = arroUp(in, x, y);
-					Pixel* down = arroDown(in, x, y);
-					Pixel* left = arroLeft(in, x, y);
-					Pixel* right = arroRight(in, x, y);
-*/

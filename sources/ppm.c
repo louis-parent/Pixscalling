@@ -101,7 +101,7 @@ PPM* readPPM(char *input)
     return ppm;
 }
 
-int writePPM(char *output, PPM* ppm)
+int writePPM(char* output, PPM* ppm)
 {
 	int writed = 0;//The number of byte writed
 	FILE* out = fopen(output, "wb");//Open the output file
