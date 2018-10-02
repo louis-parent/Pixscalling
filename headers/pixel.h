@@ -101,6 +101,15 @@ void dividePixel(Pixel* pixel, unsigned char r, unsigned char g, unsigned char b
 Pixel* copyPixel(Pixel* pixel);
 
 /**
+ * Compare to Pixel a return 1 if True
+ * @param Pixel* a : the first pixel to use for comparaison
+ * @param Pixel* b : the second pixel to use for comparaison
+ *
+ * @return 1 if the pixel are equals 0 else
+ */
+int comparePixel(Pixel* a, Pixel* b);
+
+/**
  * Remove the Pixel from the memory
  * @param Pixel* pixel : the Pixel to be deleted
  */

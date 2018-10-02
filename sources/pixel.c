@@ -74,6 +74,11 @@ Pixel* copyPixel(Pixel* pixel)
 	return getRGB(getRed(pixel), getGreen(pixel), getBlue(pixel));// Create a Pixel with the value of the color of the given Pixel
 }
 
+int comparePixel(Pixel* a, Pixel* b)
+{
+	return getRed(a) == getRed(b) && getGreen(a) == getGreen(b) && getBlue(a) == getBlue(b);
+}
+
 void removePixel(Pixel* pixel)
 {
 	free(pixel);//Free the pixel pointer

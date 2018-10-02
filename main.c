@@ -97,41 +97,8 @@ void growup(int mult){
 void upscale(){
 	growup(5);
 }
-
-Pixel* arroUp(Matrix* matrice, int x, int y){
-	if(y <= 0){
-		return select(matrice, x, y);
-	}
-	return select(matrice, x, y-1);
-}
-
-Pixel* arroDown(Matrix* matrice, int x, int y){
-	return select(matrice, x, y+1);
-}
-
-Pixel* arroLeft(Matrix* matrice, int x, int y){
-	if(x <= 0){
-		return select(matrice, x, y);
-	}
-	return select(matrice, x-1, y);
-}
-
-Pixel* arroRight(Matrix* matrice, int x, int y){
-	if(x >= getWidth(matrice)){
-		return select(matrice, x, y);
-	}
-	return select(matrice, x+1, y);
-}
-
-int comparePixel(Pixel* a, Pixel* b){
-	return getRed(a) == getRed(b) && getGreen(a) == getGreen(b) && getBlue(a) == getBlue(b);
-}
-
-
-
-
-
-	void test()
+	
+void test()
 {
 	printf("Begining Test :\n");
     printf("\t- Simple Copy Test : %f\n", timeCounterAverage(copyFile, 100));
@@ -141,7 +108,7 @@ int comparePixel(Pixel* a, Pixel* b){
     printf("\t- Simple Upscale Test : %f\n", timeCounterAverage(upscale, 1));
 }
 
-int main()
+void scale2x()
 {
 	int mult = 2;
 	PPM* inPPM = readPPM(INPUT_FILE);
@@ -154,7 +121,7 @@ int main()
 
 	for(int y = 0; y < inHeight; y++){
 		for(int x = 0; x < inWidth; x++){
-
+			
 			set(out, 2*x, 2*y, copyPixel(getPixel(inPPM, x, y)));
 			set(out, 2*x+1, 2*y, copyPixel(getPixel(inPPM, x, y)));
 			set(out, 2*x, 2*y+1, copyPixel(getPixel(inPPM, x, y)));
@@ -168,7 +135,7 @@ int main()
 
 			// Down
 			Pixel* down = select(in, x, y);
-			if(y < inWidth-1){
+			if(y < inHeight-1){
 				down = select(in, x, y+1);
 			}
 
@@ -177,13 +144,12 @@ int main()
 			if(x > 0){
 				left = select(in, x-1, y);
 			}
-
+			
 			// Right
 			Pixel* right = select(in, x, y);
-			if(x < inHeight-1){
+			if(x < inWidth-1){
 				right = select(in, x+1, y);
 			}
-
 
 			if(comparePixel(up, left)){
 				set(out, 2*x, 2*y, up);
@@ -192,7 +158,7 @@ int main()
 			if(comparePixel(up, right)){
 				set(out, 2*x+1, 2*y, up);
 			}
-/* A CORRIGER !!!
+
 			if(comparePixel(down, left) && y+1 < inHeight){
 				set(out, 2*x, 2*y+1, left);
 			}
@@ -200,7 +166,6 @@ int main()
 			if(comparePixel(down, right)){
 				set(out, 2*x+1, 2*y+1, down);
 			}
-*/
 			//set(out, mult*x+j, mult*y+i, copyPixel(getPixel(inPPM, x, y)));
 				
 			
@@ -217,7 +182,12 @@ int main()
 	
 	removePPM(inPPM);
 	removePPM(outPPM);
+}
 
+int main()
+{
+	scale2x();
+	
     return EXIT_SUCCESS;
 }
 

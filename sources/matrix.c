@@ -9,17 +9,16 @@ void initMatrix(Matrix* matrix)
     matrix->matrix = NULL;// By default the matrix is empty
 }
 
-Matrix* createMatrix(int lines, int columns)
+Matrix* createMatrix(int columns, int lines)
 {
     Matrix* matrix = malloc(sizeof(Matrix));// Allocate memory for Matrix
     initMatrix(matrix);// Init an empty Matrix
 
-    matrix->matrix = (Pixel***) malloc(columns * sizeof(Pixel**)); // Allocate the array of columns
-
-    for(int y = 0; y < columns; y++)
+    matrix->matrix = (Pixel***) malloc(lines * sizeof(Pixel**)); // Allocate the array of columns
+    for(int y = 0; y < lines; y++)
     {
-        matrix->matrix[y] = (Pixel**) malloc(lines * sizeof(Pixel*));// Allocate the lines for the column y
-        for(int x = 0; x < lines; x++)
+        matrix->matrix[y] = (Pixel**) malloc(columns * sizeof(Pixel*));// Allocate the lines for the column y
+        for(int x = 0; x < columns; x++)
         {
         	matrix->matrix[y][x] = malloc(sizeof(Pixel*));
             matrix->matrix[y][x] = getRGB(255, 255, 255);// Set a default white pixel at each position
@@ -67,9 +66,9 @@ void removeMatrix(Matrix* matrix)
 	{
 		if(matrix->matrix != NULL)// If the matrix is allocate
 		{
-			for(int y = 0; y < matrix->columns; y++)//Delete each columns
+			for(int y = 0; y < matrix->lines; y++)//Delete each columns
 			{
-				for(int x = 0; x < matrix->lines; x++)
+				for(int x = 0; x < matrix->columns; x++)
 				{
 					removePixel(matrix->matrix[y][x]);
 				}
