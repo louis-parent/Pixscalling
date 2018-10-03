@@ -96,6 +96,9 @@ PPM* readPPM(char *input)
 
 		}
 	}
+	
+	setColumns(getContent(ppm), getWidth(ppm));
+	setLines(getContent(ppm), getHeight(ppm));
 
     fclose(in);
     return ppm;
@@ -165,7 +168,7 @@ Matrix* getContent(PPM* ppm)
 
 void setContent(PPM* ppm, Matrix* content)
 {
-	removeMatrix(ppm->content); //Remove the old Matrix
+	removeMatrix(getContent(ppm));
 	ppm->content = content;// Change the pointer to the new matrix
 }
 

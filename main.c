@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
 	
 	for(int i = 0; i < scale/2 ; i++)
 	{
-		scale2x(ppm);
+		applyFilter(ppm, scale2x);
 	}
 	
 	writePPM(OUTPUT_FILE, ppm);

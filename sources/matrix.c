@@ -25,6 +25,9 @@ Matrix* createMatrix(int columns, int lines)
         }
     }
     
+    matrix->columns = columns;
+    matrix->lines = lines;
+    
     return matrix;
 }
 
@@ -47,6 +50,16 @@ int matrixColumns(Matrix* matrix)
 int matrixSize(Matrix* matrix)
 {
     return matrixLines(matrix) * matrixColumns(matrix);// Return the mult of the width and the height (line * columns = quantity)
+}
+
+void setLines(Matrix* matrix, int lines)
+{
+	matrix->lines = lines;
+}
+
+void setColumns(Matrix* matrix, int columns)
+{
+	matrix->columns = columns;
 }
 
 Pixel* select(Matrix* matrix, int x, int y)
@@ -73,7 +86,6 @@ void removeMatrix(Matrix* matrix)
 					removePixel(matrix->matrix[y][x]);
 				}
 				free(matrix->matrix[y]);
-				
 			}
 			free(matrix->matrix);// Delete the Matrix
 		}

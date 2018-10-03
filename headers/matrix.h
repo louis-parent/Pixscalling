@@ -61,6 +61,10 @@ int matrixColumns(Matrix* matrix);
  */
 int matrixSize(Matrix* matrix);
 
+void setColumns(Matrix* matrix, int columns);
+
+Pixel* select(Matrix* matrix, int x, int y);
+
 /**
  * Select the pixel of the matrix at the given position
  * @param Matrix* matrix : the Matrix where the pixel is
