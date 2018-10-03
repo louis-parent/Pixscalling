@@ -10,8 +10,8 @@ use `make` in the project folder to compile all the necessary files in one "pixs
 
 ### Window
 
-use `gcc -o pixscalling.exe main.c sources/ppm.c sources/timer.c sources/pixel.c sources/matrix.c headers/ppm.h headers/timer.h headers/pixel.h headers/matrix.h` in the project folder to compile all the necessary files in one "pixscalling.exe" executable file.
+use `gcc -o pixscalling.exe main.c sources/ppm.c sources/timer.c sources/pixel.c sources/matrix.c sources/filter.c headers/ppm.h headers/timer.h headers/pixel.h headers/matrix.h headers/filter.h` in the project folder to compile all the necessary files in one "pixscalling.exe" executable file.
 
 ## Usage
 
-Launch the pixscalling (`./pixscalling`) executable file of the project root folder to transform the file "in.ppm" in a file called "out.ppm".
+Launch the pixscalling (`./pixscalling [Scale]`) executable file of the project root folder to transform the file "in.ppm" in a file called "out.ppm".
