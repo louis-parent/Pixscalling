@@ -39,6 +39,22 @@ Matrix* growup(Matrix* matrix);
 Matrix* scale2x(Matrix* matrix);
 
 /**
+ * Apply the Scale2X (V2.0) on a Matrix
+ * @param Matrix* matrix : the Matrix to modify
+ *
+ * @return the new modified Matrix
+ */
+Matrix* scale2x2(Matrix* matrix);
+
+/**
+ * Apply the Scale3X on a Matrix
+ * @param Matrix* matrix : the Matrix to modify
+ *
+ * @return the new modified Matrix
+ */
+Matrix* scale3x(Matrix* matrix);
+
+/**
  * Apply a filter on a PPM
  * @param PPM* ppm : The PPM to modify
  * @param void (*filter)(Matrix*) : The filter to apply

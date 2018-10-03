@@ -59,7 +59,7 @@ Matrix* growup(Matrix* matrix){
 	return out;
 }
 
-Matrix* scale2xOLD(Matrix* matrix) {
+Matrix* scale2x(Matrix* matrix) {
 	int mult = 2;
 
 	int inWidth = matrixColumns(matrix);
@@ -119,7 +119,7 @@ Matrix* scale2xOLD(Matrix* matrix) {
 	return out;
 }
 
-Matrix* scale2x(Matrix* matrix) {
+Matrix* scale2x2(Matrix* matrix) {
 	int mult = 2;
 
 	int inWidth = matrixColumns(matrix);
@@ -158,23 +158,7 @@ Matrix* scale2x(Matrix* matrix) {
 			if(x < inWidth-1){
 				right = select(matrix, x+1, y);
 			}
-/*
-			if(comparePixel(up, left)){
-				set(out, 2*x, 2*y, copyPixel(up));
-			}
-
-			if(comparePixel(up, right)){
-				set(out, 2*x+1, 2*y, copyPixel(up));
-			}
-
-			if(comparePixel(down, left) && y+1 < inHeight){
-				set(out, 2*x, 2*y+1, copyPixel(left));
-			}
-
-			if(comparePixel(down, right)){
-				set(out, 2*x+1, 2*y+1, copyPixel(down));
-			}
-*/
+			
 			if(comparePixel(left, up) && !comparePixel(left, down) && !comparePixel(up, right)){
 				set(out, 2*x, 2*y, copyPixel(up));
 			}
@@ -190,6 +174,133 @@ Matrix* scale2x(Matrix* matrix) {
 			if(comparePixel(right, down) && !comparePixel(right, up) && !comparePixel(left, down)){
 				set(out, 2*x+1, 2*y+1, copyPixel(down));
 			}
+		}
+	}
+	return out;
+}
+
+Matrix* scale3x(Matrix* matrix) {
+	int mult = 3;
+
+	int inWidth = matrixColumns(matrix);
+	int inHeight = matrixLines(matrix);
+
+	Matrix* out = createMatrix(inWidth * mult, inHeight * mult);
+
+	for(int y = 0; y < inHeight; y++){
+		for(int x = 0; x < inWidth; x++){
+			
+			set(out, mult*x, mult*y, copyPixel(select(matrix, x, y)));
+			set(out, mult*x+1, mult*y, copyPixel(select(matrix, x, y)));
+			set(out, mult*x+2, mult*y, copyPixel(select(matrix, x, y)));
+			set(out, mult*x, mult*y+1, copyPixel(select(matrix, x, y)));
+			set(out, mult*x, mult*y+2, copyPixel(select(matrix, x, y)));
+			set(out, mult*x+1, mult*y+1, copyPixel(select(matrix, x, y)));
+			set(out, mult*x+2, mult*y+2, copyPixel(select(matrix, x, y)));
+			set(out, mult*x+2, mult*y+1, copyPixel(select(matrix, x, y)));
+			set(out, mult*x+1, mult*y+2, copyPixel(select(matrix, x, y)));
+
+			// A
+			Pixel* a = select(matrix, x, y);
+			if(y > 0 && x > 0){
+				a = select(matrix, x-1, y-1);
+			}
+
+			// B
+			Pixel* b = select(matrix, x, y);
+			if(y > 0){
+				b = select(matrix, x, y-1);
+			}
+
+			// C
+			Pixel* c = select(matrix, x, y);
+			if(y > 0 && x < inWidth-1){
+				c = select(matrix, x+1, y-1);
+			}
+
+			// D
+			Pixel* d = select(matrix, x, y);
+			if(x > 0){
+				d = select(matrix, x-1, y);
+			}
+
+			// E
+			Pixel* e = select(matrix, x, y);
+
+			// F
+			Pixel* f = select(matrix, x, y);
+			if(x < inWidth-1){
+				f = select(matrix, x+1, y);
+			}
+
+			// G
+			Pixel* g = select(matrix, x, y);
+			if(y < inHeight-1 && x > 0){
+				g = select(matrix, x-1, y+1);
+			}
+
+			// H
+			Pixel* h = select(matrix, x, y);
+			if(y < inHeight-1){
+				h = select(matrix, x, y+1);
+			}
+
+			// I
+			Pixel* i = select(matrix, x, y);
+			if(y < inHeight-1 && x < inWidth-1){
+				i = select(matrix, x+1, y+1);
+			}
+
+			if(comparePixel(d, b) && !comparePixel(d, h) && !comparePixel(b, f)){
+				set(out, mult*x, mult*y, copyPixel(d));
+			}
+
+			if((comparePixel(d, b) && !comparePixel(d, h) && !comparePixel(b, f) && !comparePixel(e, c)) || (comparePixel(b, f) && !comparePixel(b, d) && !comparePixel(f, h) && !comparePixel(e, a))){
+				set(out, mult*x+1, mult*y, copyPixel(b));
+			}
+
+			if(comparePixel(b, f) && !comparePixel(b, d) && !comparePixel(f, h)){
+				set(out, mult*x+2, mult*y, copyPixel(f));
+			}
+
+			if((comparePixel(h, d) && !comparePixel(h, f) && !comparePixel(d, b) && !comparePixel(e, a)) || (comparePixel(d, b) && !comparePixel(d, h) && !comparePixel(b, f) && !comparePixel(e, g))){
+				set(out, mult*x, mult*y+1, copyPixel(d));
+			}
+
+			set(out, mult*x+1, mult*y+1, copyPixel(e));
+
+			if((comparePixel(b, f) && !comparePixel(b, d) && !comparePixel(e, i)) || (comparePixel(f, h) && !comparePixel(f, b) && !comparePixel(h, d) && !comparePixel(e, c))){
+				set(out, mult*x+2, mult*y+1, copyPixel(f));
+			}
+
+			if(comparePixel(h, d) && !comparePixel(h, f) && !comparePixel(d, b)){
+				set(out, mult*x, mult*y+2, copyPixel(d));
+			}
+
+			if((comparePixel(f, h) && !comparePixel(f, b) && !comparePixel(h, d) && !comparePixel(e, g)) || (comparePixel(h, d) && !comparePixel(h, f) && !comparePixel(d, b) && !comparePixel(e, i))){
+				set(out, mult*x+1, mult*y+2, copyPixel(h));
+			}
+
+			if(comparePixel(h, f) && !comparePixel(f, b) && !comparePixel(h, d)){
+				set(out, mult*x+2, mult*y+2, copyPixel(f));
+			}
+/*
+			if(comparePixel(left, up) && !comparePixel(left, down) && !comparePixel(up, right)){
+				set(out, 2*x, 2*y, copyPixel(up));
+			}
+
+			if(comparePixel(up, right) && !comparePixel(up, left) && !comparePixel(right, down)){
+				set(out, 2*x+1, 2*y, copyPixel(right));
+			}
+
+			if(comparePixel(down, left) && !comparePixel(down, right) && !comparePixel(left, up)){
+				set(out, 2*x, 2*y+1, copyPixel(left));
+			}
+
+			if(comparePixel(right, down) && !comparePixel(right, up) && !comparePixel(left, down)){
+				set(out, 2*x+1, 2*y+1, copyPixel(down));
+			}
+*/
 		}
 	}
 	return out;
