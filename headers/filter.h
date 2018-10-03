@@ -43,6 +43,6 @@ Matrix* scale2x(Matrix* matrix);
  * @param PPM* ppm : The PPM to modify
  * @param void (*filter)(Matrix*) : The filter to apply
  */
-void applyFilter(PPM* ppm, Matrix* (*filter)(Matrix*));
+void applyFilter(PPM* ppm, Matrix* (*filter)(Matrix*), int count);
 
 #endif
