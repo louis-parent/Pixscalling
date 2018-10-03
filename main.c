@@ -52,10 +52,7 @@ int main(int argc, char* argv[])
 
 	PPM* ppm = readPPM(INPUT_FILE);
 	
-	for(int i = 0; i < scale/2 ; i++)
-	{
-		applyFilter(ppm, scale2x);
-	}
+	applyFilter(ppm, scale2x, scale/2);
 	
 	writePPM(OUTPUT_FILE, ppm);
 	removePPM(ppm);

@@ -119,11 +119,14 @@ Matrix* scale2x(Matrix* matrix) {
 	return out;
 }
 
-void applyFilter(PPM* ppm, Matrix* (*filter)(Matrix*))
+void applyFilter(PPM* ppm, Matrix* (*filter)(Matrix*), int count)
 {
-	Matrix* newMatrix = (*filter)(getContent(ppm));
+	for(int i = 0; i < count ; i++)
+	{
+		Matrix* newMatrix = (*filter)(getContent(ppm));
 	
-	setContent(ppm, newMatrix);
-	setWidth(ppm, matrixColumns(getContent(ppm)));
-	setHeight(ppm, matrixLines(getContent(ppm)));
+		setContent(ppm, newMatrix);
+		setWidth(ppm, matrixColumns(getContent(ppm)));
+		setHeight(ppm, matrixLines(getContent(ppm)));
+	}
 }
