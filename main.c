@@ -36,13 +36,13 @@ void test()
 
 int main(int argc, char* argv[])
 {
-	if(argc != 2)
+	if(argc != 3)
 	{
-		printf("Usage : ./pixscalling [Scale]\n");
+		printf("Usage : ./pixscalling [Filter] [Scale]\n");
 		return EXIT_FAILURE;
 	}
 	
-	int scale = atoi(argv[1]);
+	int scale = atoi(argv[2]);
 	
 	if(scale < 1)
 	{
@@ -52,7 +52,25 @@ int main(int argc, char* argv[])
 
 	PPM* ppm = readPPM(INPUT_FILE);
 	
-	applyFilter(ppm, scale3x, scale/2);
+	
+	if (strcmp(argv[1], "scale2x") == 0) 
+	{
+		applyFilter(ppm, scale2x, scale);
+	} 
+	else if (strcmp(argv[1], "scale2x2") == 0) 
+	{
+		applyFilter(ppm, scale2x2, scale);
+	} 
+	else if (strcmp(argv[1], "scale3x") == 0) 
+	{
+		applyFilter(ppm, scale3x, scale);
+	} 
+	else
+	{
+		removePPM(ppm);
+		printf("Unknow filter\n");
+		return EXIT_FAILURE;
+	}
 	
 	writePPM(OUTPUT_FILE, ppm);
 	removePPM(ppm);
