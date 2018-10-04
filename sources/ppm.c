@@ -54,35 +54,58 @@ PPM* readPPM(char *input)
     ppm->size = size;//Set the file size of the PPM
 
     fseek(in, 0L, SEEK_SET);//Go Back to start
+    
+    int requireDone = 0;
+    
+    while(requireDone < 3)
+    {
+    	char c;
+		int length = 0;
+		char buffer[12];// The theorical max length of this line is 5 (the width) + 5 (the height) + 1 (the space between) + 1 (The end of line char)
 
-	char* tmp = malloc(sizeof(char) * 2);//Save the Magic number in a temp Buffer
-	fread(tmp, 2*sizeof(char), 1, in);//read the Magic Number
-	ppm->header->magicNumber = malloc(sizeof(char) *2);//Init the magic number
-	ppm->header->magicNumber[0] = tmp[0];//Set the magic number
-	ppm->header->magicNumber[1] = tmp[1];
-	fseek(in, 1, SEEK_CUR);//Pass the end of line
-	free(tmp);//Deleting temporary buffer
+		do
+		{
+			if(length < 12)
+			{
+				fread(&buffer[length], sizeof(char), 1, in);
+				c = buffer[length];
+			}
+			else
+			{
+				fread(&c, sizeof(char), 1, in);
+			}
+			
+			length++;
+		}while(c != '\n');//Read the dimension line
+		
+		if(buffer[0] != '#')
+		{
+			if(requireDone == 0)
+			{
+				ppm->header->magicNumber = malloc(sizeof(char) *2);//Init the magic number
+				ppm->header->magicNumber[0] = buffer[0];//Set the magic number
+				ppm->header->magicNumber[1] = buffer[1];
+			}
+			else if(requireDone == 1)
+			{
 
-	char c;
-	int length = 0;
-	char buffer[12];// The theorical max length of this line is 5 (the width) + 5 (the height) + 1 (the space between) + 1 (The end of line char)
-
-	do
-	{
-		fread(&buffer[length], sizeof(char), 1, in);
-		c = buffer[length];
-		length++;
-	}while(c != '\n');//Read the dimension line
-
-	buffer[length - 1] = ' ';//Replace the end of line for no interpreting by atoi
-	ppm->header->width = atoi(strtok(buffer, " "));//Set the width Width
-	ppm->header->height = atoi(strtok(NULL, " "));//Set the Height
-
-	char color[3];//The color buffer
-	fread(color, sizeof(char), 3, in);//Read the Color Level
-	ppm->header->colorLevel = atoi(color);//Set the color level with cast to int
-	fseek(in, 1, SEEK_CUR);//Pass the end of line
-
+				buffer[length - 1] = ' ';//Replace the end of line for no interpreting by atoi
+				ppm->header->width = atoi(strtok(buffer, " "));//Set the width Width
+				ppm->header->height = atoi(strtok(NULL, " "));//Set the Height
+			}
+			else if(requireDone == 2)
+			{
+				char color[3];//The color buffer
+				color[0] = buffer[0];
+				color[1] = buffer[1];
+				color[2] = buffer[2];
+				
+				ppm->header->colorLevel = atoi(color);//Set the color level with cast to int
+			}
+			requireDone++;
+		}
+	}
+	
 	ppm->content = createMatrix(ppm->header->width, ppm->header->height);//Init the first dimension of the matrix
 	for(int y = 0; y < ppm->header->height; y++)
 	{
