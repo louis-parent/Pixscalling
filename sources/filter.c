@@ -59,7 +59,7 @@ Matrix* growup(Matrix* matrix){
 	return out;
 }
 
-Matrix* scale2x(Matrix* matrix) {
+Matrix* epx(Matrix* matrix) {
 	int mult = 2;
 
 	int inWidth = matrixColumns(matrix);
@@ -119,7 +119,7 @@ Matrix* scale2x(Matrix* matrix) {
 	return out;
 }
 
-Matrix* scale2x2(Matrix* matrix) {
+Matrix* scale2x(Matrix* matrix) {
 	int mult = 2;
 
 	int inWidth = matrixColumns(matrix);

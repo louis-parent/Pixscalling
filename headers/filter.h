@@ -36,7 +36,7 @@ Matrix* growup(Matrix* matrix);
  *
  * @return the new modified Matrix
  */
-Matrix* scale2x(Matrix* matrix);
+Matrix* epx(Matrix* matrix);
 
 /**
  * Apply the Scale2X (V2.0) on a Matrix
@@ -44,7 +44,7 @@ Matrix* scale2x(Matrix* matrix);
  *
  * @return the new modified Matrix
  */
-Matrix* scale2x2(Matrix* matrix);
+Matrix* scale2x(Matrix* matrix);
 
 /**
  * Apply the Scale3X on a Matrix

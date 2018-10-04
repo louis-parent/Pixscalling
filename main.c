@@ -53,13 +53,13 @@ int main(int argc, char* argv[])
 	PPM* ppm = readPPM(INPUT_FILE);
 	
 	
-	if (strcmp(argv[1], "scale2x") == 0) 
+	if (strcmp(argv[1], "epx") == 0) 
+	{
+		applyFilter(ppm, epx, scale);
+	} 
+	else if (strcmp(argv[1], "scale2x") == 0) 
 	{
 		applyFilter(ppm, scale2x, scale);
-	} 
-	else if (strcmp(argv[1], "scale2x2") == 0) 
-	{
-		applyFilter(ppm, scale2x2, scale);
 	} 
 	else if (strcmp(argv[1], "scale3x") == 0) 
 	{
