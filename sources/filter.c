@@ -269,7 +269,8 @@ Matrix* scale3x(Matrix* matrix) {
 
 			set(out, mult*x+1, mult*y+1, copyPixel(e));
 
-			if((comparePixel(b, f) && !comparePixel(b, d) && !comparePixel(e, i)) || (comparePixel(f, h) && !comparePixel(f, b) && !comparePixel(h, d) && !comparePixel(e, c))){
+			// ICI
+			if((comparePixel(b, f) && !comparePixel(b, d) && !comparePixel(f, h) && !comparePixel(e, i)) || (comparePixel(f, h) && !comparePixel(f, b) && !comparePixel(h, d) && !comparePixel(e, c))){
 				set(out, mult*x+2, mult*y+1, copyPixel(f));
 			}
 
