@@ -36,32 +36,35 @@ void test()
 
 int main(int argc, char* argv[])
 {
-	if(argc != 3)
+	if(argc != 5)
 	{
-		printf("Usage : ./pixscalling [Filter] [Scale]\n");
+		printf("Usage : ./pixscalling [Input File] [Output File] [Filter] [Scale]\n");
 		return EXIT_FAILURE;
 	}
 	
-	int scale = atoi(argv[2]);
+	int scale = atoi(argv[4]);
 	
 	if(scale < 1)
 	{
 		printf("Incorrect Scale\n");
 		return EXIT_FAILURE;
 	}
+	
+	char command[80];
+	sprintf(command, "convert %s %s", argv[1], INPUT_FILE);
+	system(command);
 
 	PPM* ppm = readPPM(INPUT_FILE);
 	
-	
-	if (strcmp(argv[1], "epx") == 0) 
+	if (strcmp(argv[3], "epx") == 0) 
 	{
 		applyFilter(ppm, epx, scale);
 	} 
-	else if (strcmp(argv[1], "scale2x") == 0) 
+	else if (strcmp(argv[3], "scale2x") == 0) 
 	{
 		applyFilter(ppm, scale2x, scale);
 	} 
-	else if (strcmp(argv[1], "scale3x") == 0) 
+	else if (strcmp(argv[3], "scale3x") == 0) 
 	{
 		applyFilter(ppm, scale3x, scale);
 	} 
@@ -74,6 +77,12 @@ int main(int argc, char* argv[])
 	
 	writePPM(OUTPUT_FILE, ppm);
 	removePPM(ppm);
+	
+	sprintf(command, "convert %s %s", OUTPUT_FILE, argv[2]);
+	system(command);
+	
+	remove(OUTPUT_FILE);
+	remove(INPUT_FILE);
 	
     return EXIT_SUCCESS;
 }
