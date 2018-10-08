@@ -2,6 +2,8 @@
 
 3rd Semester project aiming to apply Pixel Scalling filters on images or any other sources!
 
+*Version 1.0 is out*
+
 ## Compilation
 
 ### Linux
