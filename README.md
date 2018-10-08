@@ -18,9 +18,9 @@ Launch the pixscalling (`./pixscalling [In file] [Out file] [Filter] [Iteration
 
 ## Available filters
 
-[X] epx
-[X] scale2x
-[X] scale3x
-[X] eagle
-[] supereagle
-[] hqnx
+- [X] epx
+- [X] scale2x
+- [X] scale3x
+- [X] eagle
+- [ ] supereagle
+- [ ] hqnx
