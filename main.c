@@ -72,6 +72,10 @@ int main(int argc, char* argv[])
 	{
 		applyFilter(ppm, growup, scale);
 	} 
+	else if (strcmp(argv[3], "eagle") == 0) 
+	{
+		applyFilter(ppm, eagle, scale);
+	} 
 	else
 	{
 		removePPM(ppm);

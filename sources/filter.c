@@ -307,6 +307,94 @@ Matrix* scale3x(Matrix* matrix) {
 	return out;
 }
 
+Matrix* eagle(Matrix* matrix) {
+	int mult = 2;
+
+	int inWidth = matrixColumns(matrix);
+	int inHeight = matrixLines(matrix);
+
+	Matrix* out = createMatrix(inWidth * mult, inHeight * mult);
+
+	for(int yCursor = 0; yCursor < inHeight; yCursor++){
+		for(int xCursor = 0; xCursor < inWidth; xCursor++){
+			
+			set(out, mult*xCursor, mult*yCursor, copyPixel(select(matrix, xCursor, yCursor)));
+			set(out, mult*xCursor+1, mult*yCursor, copyPixel(select(matrix, xCursor, yCursor)));
+			set(out, mult*xCursor, mult*yCursor+1, copyPixel(select(matrix, xCursor, yCursor)));
+			set(out, mult*xCursor+1, mult*yCursor+1, copyPixel(select(matrix, xCursor, yCursor)));
+
+			// S
+			Pixel* s = select(matrix, xCursor, yCursor);
+			if(yCursor > 0 && xCursor > 0){
+				s = select(matrix, xCursor-1, yCursor-1);
+			}
+
+			// T
+			Pixel* t = select(matrix, xCursor, yCursor);
+			if(yCursor > 0){
+				t = select(matrix, xCursor, yCursor-1);
+			}
+
+			// U
+			Pixel* u = select(matrix, xCursor, yCursor);
+			if(yCursor > 0 && xCursor < inWidth-1){
+				u = select(matrix, xCursor+1, yCursor-1);
+			}
+
+			// V
+			Pixel* v = select(matrix, xCursor, yCursor);
+			if(xCursor > 0){
+				v = select(matrix, xCursor-1, yCursor);
+			}
+
+			// C
+			Pixel* c = select(matrix, xCursor, yCursor);
+
+			// W
+			Pixel* w = select(matrix, xCursor, yCursor);
+			if(xCursor < inWidth-1){
+				w = select(matrix, xCursor+1, yCursor);
+			}
+
+			// X
+			Pixel* x = select(matrix, xCursor, yCursor);
+			if(yCursor < inHeight-1 && xCursor > 0){
+				x = select(matrix, xCursor-1, yCursor+1);
+			}
+
+			// Y
+			Pixel* y = select(matrix, xCursor, yCursor);
+			if(yCursor < inHeight-1){
+				y = select(matrix, xCursor, yCursor+1);
+			}
+
+			// Z
+			Pixel* z = select(matrix, xCursor, yCursor);
+			if(yCursor < inHeight-1 && xCursor < inWidth-1){
+				z = select(matrix, xCursor+1, yCursor+1);
+			}
+
+			if(comparePixel(v, s) && comparePixel(s, t) && comparePixel(v, t)){
+				set(out, mult*xCursor, mult*yCursor, copyPixel(s));
+			}
+
+			if(comparePixel(t, u) && comparePixel(u, w) && comparePixel(t, w)){
+				set(out, mult*xCursor+1, mult*yCursor, copyPixel(u));
+			}
+
+			if(comparePixel(v, x) && comparePixel(x, y) && comparePixel(v, y)){
+				set(out, mult*xCursor, mult*yCursor+1, copyPixel(x));
+			}
+
+			if(comparePixel(w, z) && comparePixel(z, y) && comparePixel(w, y)){
+				set(out, mult*xCursor+1, mult*yCursor+1, copyPixel(z));
+			}
+
+		}
+	}
+	return out;
+}
+
 void applyFilter(PPM* ppm, Matrix* (*filter)(Matrix*), int count)
 {
 	for(int i = 0; i < count ; i++)

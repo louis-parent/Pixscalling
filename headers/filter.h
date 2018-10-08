@@ -54,6 +54,8 @@ Matrix* scale2x(Matrix* matrix);
  */
 Matrix* scale3x(Matrix* matrix);
 
+Matrix* eagle(Matrix* matrix);
+
 /**
  * Apply a filter on a PPM
  * @param PPM* ppm : The PPM to modify
