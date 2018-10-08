@@ -14,4 +14,11 @@ use `gcc -o pixscalling.exe main.c sources/ppm.c sources/timer.c sources/pixel.c
 
 ## Usage
 
-Launch the pixscalling (`./pixscalling [Scale]`) executable file of the project root folder to transform the file "in.ppm" in a file called "out.ppm".
+Launch the pixscalling (`./pixscalling [In file] [Out file] [Filter] [Iteration]`) executable file of the project root folder to transform the file "in.ppm" in a file called "out.ppm".
+
+## Available filters
+
+	- eqx
+	- scale2x
+ 	- scale3x
+	- eagle
