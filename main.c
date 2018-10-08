@@ -68,6 +68,10 @@ int main(int argc, char* argv[])
 	{
 		applyFilter(ppm, scale3x, scale);
 	} 
+	else if (strcmp(argv[3], "upscale") == 0) 
+	{
+		applyFilter(ppm, growup, scale);
+	} 
 	else
 	{
 		removePPM(ppm);

@@ -38,7 +38,7 @@ void negative(Matrix* matrix)
 }
 
 Matrix* growup(Matrix* matrix){
-	int mult = 2;
+	int mult = 3;
 
 	int inWidth = matrixColumns(matrix);
 	int inHeight = matrixLines(matrix);
