@@ -86,9 +86,23 @@ int comparePixel(Pixel* a, Pixel* b)
 
 void removePixel(Pixel* pixel)
 {
-	free(pixel->r);
-	free(pixel->g);
-	free(pixel->b);
+	if(pixel != NULL)
+	{
+		if(pixel->r != NULL)
+		{
+			free(pixel->r);
+		}
+		
+		if(pixel->g != NULL)
+		{
+			free(pixel->g);
+		}
+		
+		if(pixel->b != NULL)
+		{
+			free(pixel->b);
+		}
 	
-	free(pixel);//Free the pixel pointer
+		free(pixel);//Free the pixel pointer
+	}
 }
