@@ -400,9 +400,9 @@ void applyFilter(PPM* ppm, Matrix* (*filter)(Matrix*), int count)
 	for(int i = 0; i < count ; i++)
 	{
 		Matrix* newMatrix = (*filter)(getContent(ppm));
-	
+		
 		setContent(ppm, newMatrix);
 		setWidth(ppm, matrixColumns(getContent(ppm)));
-		setHeight(ppm, matrixLines(getContent(ppm)));
+		setHeight(ppm, matrixLines(getContent(ppm)));		
 	}
 }

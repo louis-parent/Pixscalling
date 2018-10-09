@@ -19,9 +19,6 @@ void initPPM(PPM* ppm)
 	PPMHeader* header = malloc(sizeof(PPMHeader));
 	initHeader(header);
 
-	Matrix* matrix = malloc(sizeof(Matrix));
-	initMatrix(matrix);
-
 	ppm->filename = NULL;
 	ppm->size = 0;
 	ppm->header = header;

@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include "../headers/matrix.h"
 
+extern int count = 0;
+
 void initMatrix(Matrix* matrix)
 {
     matrix->lines = 0;// by default there are 0 line

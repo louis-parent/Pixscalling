@@ -7,9 +7,9 @@
 typedef struct Pixel Pixel;
 struct Pixel
 {
-	unsigned char r;// The value of the red color
-	unsigned char g;// The value of the green color
-	unsigned char b;// The value of the blue color
+	unsigned char* r;// The value of the red color
+	unsigned char* g;// The value of the green color
+	unsigned char* b;// The value of the blue color
 };
 
 /**
