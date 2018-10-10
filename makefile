@@ -17,7 +17,7 @@ bin/ppm.o: sources/ppm.c headers/ppm.h headers/matrix.h headers/pixel.h headers/
 bin/filter.o: sources/filter.c headers/filter.h headers/pixel.h headers/ppm.h headers/matrix.h
 	@$(CC) -o bin/filter.o -c sources/filter.c $(CFLAGS)
 
-bin/timer.o: sources/timer.c headers/timer.h 
+bin/timer.o: sources/timer.c headers/timer.h headers/ppm.h headers/matrix.h
 	@$(CC) -o bin/timer.o -c sources/timer.c $(CFLAGS)
 	
 bin/memory.o: sources/memory.c headers/memory.h 

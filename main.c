@@ -18,6 +18,8 @@
 #define INPUT_FILE "in.ppm"
 #define OUTPUT_FILE "out.ppm"
 
+int makeSpeedTest = 0;
+
 void copyFile()
 {
 	PPM* ppm = readPPM(INPUT_FILE);
@@ -37,13 +39,36 @@ void test()
 
 int main(int argc, char* argv[])
 {
-	if(argc != 5)
+	if(argc != 5 && argc != 6)
 	{
-		printf("Usage : ./pixscalling [Input File] [Output File] [Filter] [Scale]\n");
+		printf("Usage : ./pixscalling <options -s m> [Input File] [Output File] [Filter] [Scale]\n");
 		return EXIT_FAILURE;
 	}
 	
-	int scale = atoi(argv[4]);
+	if(argc == 6)
+	{
+		if(argv[1][0] == '-')
+		{
+			for(int i = 1; i < strlen(argv[1]); i++)
+			{
+				if(argv[1][i] == 's')
+				{
+					makeSpeedTest = 1;
+				}
+				else if(argv[1][i] == 'm')
+				{
+					setDebug();
+				}
+			}
+		}
+		else
+		{
+			printf("Usage : ./pixscalling <options -s m> [Input File] [Output File] [Filter] [Scale]\n");
+			return EXIT_FAILURE;
+		}
+	}
+	
+	int scale = atoi(argv[argc - 1]);
 	
 	if(scale < 1)
 	{
@@ -52,30 +77,32 @@ int main(int argc, char* argv[])
 	}
 	
 	char command[80];
-	sprintf(command, "convert %s %s", argv[1], INPUT_FILE);
+	sprintf(command, "convert %s %s", argv[argc - 4], INPUT_FILE);
 	system(command);
+	
+	double executionTime = 0;
 
 	PPM* ppm = readPPM(INPUT_FILE);
 	
-	if (strcmp(argv[3], "epx") == 0)
+	if (strcmp(argv[argc - 2], "epx") == 0)
 	{
-		applyFilter(ppm, epx, scale);
+		executionTime = timeCounter(ppm, epx, scale);
 	} 
-	else if (strcmp(argv[3], "scale2x") == 0) 
+	else if (strcmp(argv[argc - 2], "scale2x") == 0) 
 	{
-		applyFilter(ppm, scale2x, scale);
+		executionTime = timeCounter(ppm, scale2x, scale);
 	} 
-	else if (strcmp(argv[3], "scale3x") == 0) 
+	else if (strcmp(argv[argc - 2], "scale3x") == 0) 
 	{
-		applyFilter(ppm, scale3x, scale);
+		executionTime = timeCounter(ppm, scale3x, scale);
 	} 
-	else if (strcmp(argv[3], "upscale") == 0) 
+	else if (strcmp(argv[argc - 2], "upscale") == 0) 
 	{
-		applyFilter(ppm, growup, scale);
+		executionTime = timeCounter(ppm, growup, scale);
 	} 
-	else if (strcmp(argv[3], "eagle") == 0) 
+	else if (strcmp(argv[argc - 2], "eagle") == 0) 
 	{
-		applyFilter(ppm, eagle, scale);
+		executionTime = timeCounter(ppm, eagle, scale);
 	} 
 	else
 	{
@@ -87,11 +114,16 @@ int main(int argc, char* argv[])
 	writePPM(OUTPUT_FILE, ppm);
 	removePPM(ppm);
 	
-	sprintf(command, "convert %s %s", OUTPUT_FILE, argv[2]);
+	sprintf(command, "convert %s %s", OUTPUT_FILE, argv[argc - 3]);
 	system(command);
 	
 	remove(OUTPUT_FILE);
 	remove(INPUT_FILE);
+	
+	if(makeSpeedTest == 1)
+	{
+		printf("\n================================\nExecution Time : %fs\n", executionTime);
+	}
 	
 	printUnfreeAlloc();
 	

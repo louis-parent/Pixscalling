@@ -3,6 +3,8 @@
 
 #define MAX_ALLOCATION 500000
 
+void setDebug();
+
 void* labelMalloc(int size, char* label);
 void freeLabel(void* ptr);
 

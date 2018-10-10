@@ -7,7 +7,12 @@ char* labels[MAX_ALLOCATION];
 
 int allocationCount = 0;
 
-extern int debug = 0;
+int debug = 0;
+
+void setDebug()
+{
+	debug = 1;
+}
 
 void* labelMalloc(int size, char* label)
 {
@@ -67,7 +72,7 @@ void printUnfreeAlloc()
 	{
 		if(allocationCount > 0)
 		{
-			printf("===============================\nUnfree Memory : %i pointers :\n", allocationCount);
+			printf("\n===============================\nUnfree Memory : %i pointers :\n", allocationCount);
 			for(int i = 0; i < allocationCount; i++)
 			{
 				if(allocated[i] != 0)
@@ -78,7 +83,7 @@ void printUnfreeAlloc()
 		}
 		else
 		{
-			printf("===================\nNo Unfree Memory !!\n");
+			printf("\n===================\nNo Unfree Memory !!\n");
 		}
 	}
 }
