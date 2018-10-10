@@ -1,7 +1,7 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "../headers/matrix.h"
-
-extern int count = 0;
+#include "../headers/memory.h"
 
 void initMatrix(Matrix* matrix)
 {
@@ -13,16 +13,15 @@ void initMatrix(Matrix* matrix)
 
 Matrix* createMatrix(int columns, int lines)
 {
-    Matrix* matrix = malloc(sizeof(Matrix));// Allocate memory for Matrix
+    Matrix* matrix = labelMalloc(sizeof(Matrix), "Matrix Creation");// labelMalloc memory for Matrix
     initMatrix(matrix);// Init an empty Matrix
 
-    matrix->matrix = (Pixel***) malloc(lines * sizeof(Pixel**)); // Allocate the array of columns
+    matrix->matrix = (Pixel***) labelMalloc(lines * sizeof(Pixel**), "Matrix Lines Array"); // labelMalloc the array of columns
     for(int y = 0; y < lines; y++)
     {
-        matrix->matrix[y] = (Pixel**) malloc(columns * sizeof(Pixel*));// Allocate the lines for the column y
+        matrix->matrix[y] = (Pixel**) labelMalloc(columns * sizeof(Pixel*), "Matrix Column Array");// labelMalloc the lines for the column y
         for(int x = 0; x < columns; x++)
         {
-        	matrix->matrix[y][x] = malloc(sizeof(Pixel*));
             matrix->matrix[y][x] = getRGB(255, 255, 255);// Set a default white pixel at each position
         }
     }
@@ -77,9 +76,9 @@ void set(Matrix* matrix, int x, int y, Pixel* pixel)
 
 void removeMatrix(Matrix* matrix)
 {
-	if(matrix != NULL) // If the pointer is allocate
+	if(matrix != NULL) // If the pointer is labelMalloc
 	{
-		if(matrix->matrix != NULL)// If the matrix is allocate
+		if(matrix->matrix != NULL)// If the matrix is labelMalloc
 		{
 			for(int y = 0; y < matrix->lines; y++)//Delete each columns
 			{
@@ -87,10 +86,10 @@ void removeMatrix(Matrix* matrix)
 				{
 					removePixel(matrix->matrix[y][x]);
 				}
-				free(matrix->matrix[y]);
+				freeLabel(matrix->matrix[y]);
 			}
-			free(matrix->matrix);// Delete the Matrix
+			freeLabel(matrix->matrix);// Delete the Matrix
 		}
-		free(matrix);// Delete the pointer
+		freeLabel(matrix);// Delete the pointer
 	}
 }

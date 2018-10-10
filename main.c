@@ -13,6 +13,7 @@
 #include "headers/matrix.h"
 #include "headers/timer.h"
 #include "headers/filter.h"
+#include "headers/memory.h"
 
 #define INPUT_FILE "in.ppm"
 #define OUTPUT_FILE "out.ppm"
@@ -56,7 +57,7 @@ int main(int argc, char* argv[])
 
 	PPM* ppm = readPPM(INPUT_FILE);
 	
-	if (strcmp(argv[3], "epx") == 0) 
+	if (strcmp(argv[3], "epx") == 0)
 	{
 		applyFilter(ppm, epx, scale);
 	} 
@@ -91,6 +92,8 @@ int main(int argc, char* argv[])
 	
 	remove(OUTPUT_FILE);
 	remove(INPUT_FILE);
+	
+	printUnfreeAlloc();
 	
     return EXIT_SUCCESS;
 }

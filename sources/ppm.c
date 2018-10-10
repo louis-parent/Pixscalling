@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../headers/ppm.h"
+#include "../headers/memory.h"
 
 void initHeader(PPMHeader* header)
 {
@@ -16,7 +17,7 @@ void initHeader(PPMHeader* header)
 
 void initPPM(PPM* ppm)
 {
-	PPMHeader* header = malloc(sizeof(PPMHeader));
+	PPMHeader* header = labelMalloc(sizeof(PPMHeader), "PPM Header Creation");
 	initHeader(header);
 
 	ppm->filename = NULL;
@@ -27,7 +28,7 @@ void initPPM(PPM* ppm)
 
 PPM* createPPM(Matrix* matrix, int width, int height)
 {
-	PPM* ppm = malloc(sizeof(PPM));// Allocate a PPM in the memory
+	PPM* ppm = labelMalloc(sizeof(PPM), "PPM Creation");// labelMalloc a PPM in the memory
 	initPPM(ppm);// Init the PPM to its default value
 	
 	setWidth(ppm, width);// Change the width with the given one
@@ -39,9 +40,9 @@ PPM* createPPM(Matrix* matrix, int width, int height)
 
 PPM* readPPM(char *input)
 {
-	PPM* ppm = malloc(sizeof(PPM));//Create empty PPM
+	PPM* ppm = labelMalloc(sizeof(PPM), "PPM Creation");//Create empty PPM
 	initPPM(ppm);//Init PPM
-	ppm->filename = malloc(sizeof(input));
+	ppm->filename = labelMalloc(sizeof(input), "File Name");
 	strcpy(ppm->filename, input);//Set the origin file name of the PPM
 
 	FILE* in = fopen(input, "rb");//Open the orignal file
@@ -79,7 +80,7 @@ PPM* readPPM(char *input)
 		{
 			if(requireDone == 0)
 			{
-				ppm->header->magicNumber = malloc(sizeof(char) *2);//Init the magic number
+				ppm->header->magicNumber = labelMalloc(sizeof(char) *2, "Magic Number");//Init the magic number
 				ppm->header->magicNumber[0] = buffer[0];//Set the magic number
 				ppm->header->magicNumber[1] = buffer[1];
 			}
@@ -206,10 +207,10 @@ void removePPMHeader(PPMHeader* header)
 	{
 		if(header->magicNumber != NULL && header->magicNumber != PPM_MAGIC_NUMBER)
 		{
-			free(header->magicNumber); // Remove the magic number pointer
+			freeLabel(header->magicNumber); // Remove the magic number pointer
 		}
 		
-		free(header); // Remove the entiere header
+		freeLabel(header); // Remove the entiere header
 	}
 }
 
@@ -222,9 +223,9 @@ void removePPM(PPM* ppm)
 		
 		if(ppm->filename != NULL)
 		{
-			free(ppm->filename); // Remove the filename pointer
+			freeLabel(ppm->filename); // Remove the filename pointer
 		}
 		
-		free(ppm);// Remove the PPM
+		freeLabel(ppm);// Remove the PPM
 	}
 }

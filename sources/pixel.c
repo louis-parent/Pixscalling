@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "../headers/pixel.h"
+#include "../headers/memory.h"
 
 void initPixel(Pixel* pixel)
 {
@@ -10,12 +11,12 @@ void initPixel(Pixel* pixel)
 
 Pixel* getRGB(unsigned char r, unsigned char g, unsigned char b)
 {
-	Pixel* pixel = malloc(sizeof(Pixel));// Allocate the memory for a Pixel
+	Pixel* pixel = labelMalloc(sizeof(Pixel), "Pixel Creation");// labelMalloc the memory for a Pixel
 	initPixel(pixel);// Init a pixel to its default value
 	
-	pixel->r = malloc(sizeof(unsigned char));
-	pixel->g = malloc(sizeof(unsigned char));
-	pixel->b = malloc(sizeof(unsigned char));
+	pixel->r = labelMalloc(sizeof(unsigned char), "Pixel r char");
+	pixel->g = labelMalloc(sizeof(unsigned char), "Pixel g char");
+	pixel->b = labelMalloc(sizeof(unsigned char), "Pixel b char");
 		
 	*(pixel->r) = r;// Change the red value to the given one
 	*(pixel->g) = g;// Change the green value to the given one
@@ -90,19 +91,19 @@ void removePixel(Pixel* pixel)
 	{
 		if(pixel->r != NULL)
 		{
-			free(pixel->r);
+			freeLabel(pixel->r);
 		}
 		
 		if(pixel->g != NULL)
 		{
-			free(pixel->g);
+			freeLabel(pixel->g);
 		}
 		
 		if(pixel->b != NULL)
 		{
-			free(pixel->b);
+			freeLabel(pixel->b);
 		}
 	
-		free(pixel);//Free the pixel pointer
+		freeLabel(pixel);//Free the pixel pointer
 	}
 }
