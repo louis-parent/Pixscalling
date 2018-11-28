@@ -37,11 +37,16 @@ void test()
     printf("\t- Simple Upscale Test : %f\n", timeCounterAverage(upscale, 1));*/
 }
 
+void usage()
+{
+	printf("Usage : ./pixscalling <options -s m> [Input File] [Output File] [Filter] [Scale]\n");
+}
+
 int main(int argc, char* argv[])
 {
 	if(argc != 5 && argc != 6)
 	{
-		printf("Usage : ./pixscalling <options -s m> [Input File] [Output File] [Filter] [Scale]\n");
+		usage();
 		return EXIT_FAILURE;
 	}
 	
@@ -63,7 +68,7 @@ int main(int argc, char* argv[])
 		}
 		else
 		{
-			printf("Usage : ./pixscalling <options -s m> [Input File] [Output File] [Filter] [Scale]\n");
+			usage();
 			return EXIT_FAILURE;
 		}
 	}
