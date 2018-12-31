@@ -10,7 +10,7 @@ use `make` in the project folder to compile all the necessary files in one "pixs
 
 ### Window
 
-Coming soon !
+No support for now...
 
 ## Usage
 
