@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
 	{
 		if(argv[1][0] == '-')
 		{
-			for(int i = 1; i < strlen(argv[1]); i++)
+			for(unsigned int i = 1; i < strlen(argv[1]); i++)
 			{
 				if(argv[1][i] == 's')
 				{
@@ -108,6 +108,10 @@ int main(int argc, char* argv[])
 	else if (strcmp(argv[argc - 2], "eagle") == 0) 
 	{
 		executionTime = timeCounter(ppm, eagle, scale);
+	}
+	else if (strcmp(argv[argc - 2], "scale") == 0) 
+	{
+		executionTime = timeCounter(ppm, growup, scale);
 	} 
 	else
 	{
