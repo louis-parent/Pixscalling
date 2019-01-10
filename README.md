@@ -2,6 +2,8 @@
 
 3rd Semester project aiming to apply Pixel Scalling filters on images or any other sources!
 
+An interface can be found in the [Pixscalling Interface](https://github.com/Appixroid/PixscallingInterface) repository.
+
 ## Compilation
 
 ### Linux
@@ -18,6 +20,7 @@ Launch the pixscalling (`./pixscalling <options -s -m> [In file] [Out file] [Fi
 
 ## Available filters
 
+- [X] scale (No filter just size up)
 - [X] epx
 - [X] scale2x
 - [X] scale3x
